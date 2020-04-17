@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Rhytm Game</string>
+    <string name="action_settings">Settings</string>
+    <string name="what_to_buy">What to buy?</string>
+    <string name="how_many">How many?</string>
+    <string name="playerhand">playerHand</string>
+    <string name="computerhand">computerHand</string>
+    <string name="btnRock">Rock</string>
+    <string name="btnPaper">Paper</string>
+    <string name="btnScissors">Scissors</string>
+    <string name="winLose">Who will win?!</string>
+    <string name="title_activity_game_history">GameHistory</string>
+    <string name="date">Date</string>
+</resources>
