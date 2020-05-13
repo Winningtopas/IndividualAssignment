@@ -1,6 +1,7 @@
 package com.example.shoppinglistkotlin
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
@@ -25,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     private var playerHandInt: Int = 1
     private var computerHandInt: Int = 1
 
+    private lateinit var mp: MediaPlayer
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -35,6 +38,10 @@ class MainActivity : AppCompatActivity() {
 
         productRepository = ProductRepository(this)
         initViews()
+
+        //sound
+
+        mp = MediaPlayer.create(this, R.raw.testsound)
     }
 
     private fun deleteGameList() {
@@ -112,16 +119,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onRockClick(){
+        mp.start()
         hand = "rock"
         computer() // parameter rock
     }
 
     private fun onPaperClick(){
+        mp.start()
         hand = "paper"
         computer()
     }
 
     private fun onScissorsClick(){
+        mp.start()
         hand = "scissors"
         computer()
     }
