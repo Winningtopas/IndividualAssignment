@@ -15,6 +15,10 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
+import java.util.Timer
+import kotlin.concurrent.fixedRateTimer
+import kotlin.concurrent.schedule
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var productRepository: ProductRepository
@@ -25,6 +29,14 @@ class MainActivity : AppCompatActivity() {
 
     private var playerHandInt: Int = 1
     private var computerHandInt: Int = 1
+    private var scoreInt: Int = 0
+
+    var randomStart: Int = (0..2).random()
+    val computerOptions: Array<String> = arrayOf("1", "2", "3")
+    val computerCombination: ArrayList<String> = arrayListOf(computerOptions[randomStart])
+
+    val playerCombination: ArrayList<String> = arrayListOf()
+
 
     private lateinit var mp: MediaPlayer
 
@@ -32,7 +44,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = "Rhytm Game"
 
         //deleteGameList()
 
@@ -42,6 +53,7 @@ class MainActivity : AppCompatActivity() {
         //sound
 
         mp = MediaPlayer.create(this, R.raw.testsound)
+        showCombination()
     }
 
     private fun deleteGameList() {
@@ -105,9 +117,17 @@ class MainActivity : AppCompatActivity() {
             else -> R.drawable.scissors
         }
 
+        if(cHand == hand){
+            scoreInt++
+            score.text = scoreInt.toString()
+        }
+        else{
+            score.text = " "
+        }
+
         playerHand.setImageResource(playerResourceID)
         computerHand.setImageResource(computerResourceID)
-
+/*
         if(cHand == hand)
             winlose.text = "Draw"
         if(cHand == "rock" && hand == "paper" || cHand == "paper" && hand == "scissors" || cHand == "scissors" && hand == "rock")
@@ -115,25 +135,64 @@ class MainActivity : AppCompatActivity() {
         if(hand == "rock" && cHand == "paper" || hand == "paper" && cHand == "scissors" || hand == "scissors" && cHand == "rock")
             winlose.text = "Computer wins!"
 
+ */
+
         addProduct(playerResourceID, computerResourceID)
     }
 
+    private fun showCombination(){
+        var random: Int = (0..2).random()
+        //computerCombination.add(computerOptions[random])
+        winlose.text = computerCombination.toString()
+    }
+
     private fun onRockClick(){
-        mp.start()
-        hand = "rock"
-        computer() // parameter rock
+        playerCombination.add("1")
+        if(playerCombination == computerCombination)
+            winlose.text = "gewonnen"
+        else
+            winlose.text = "verloren het was " + computerCombination[computerCombination.lastIndex]
+
+
+
+        Timer().schedule(object : TimerTask() {
+            override fun run() {
+                mp.start()
+                hand = "rock"
+                //computer()
+            }
+        }, 2000)
+
+        showCombination()
     }
 
     private fun onPaperClick(){
+        playerCombination.add("2")
+        if(playerCombination == computerCombination)
+            winlose.text = "gewonnen"
+        else
+            winlose.text = "verloren het was " + computerCombination[computerCombination.lastIndex]
+
         mp.start()
         hand = "paper"
         computer()
+
+        showCombination()
     }
 
     private fun onScissorsClick(){
+        playerCombination.add("3")
+
+        if(playerCombination == computerCombination)
+            winlose.text = "gewonnen"
+        else
+            winlose.text = "verloren het was " + computerCombination[computerCombination.lastIndex]
+
         mp.start()
         hand = "scissors"
         computer()
+
+        showCombination()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

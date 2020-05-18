@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".level_select"
+            android:name=".LevelSelect"
             android:label="@string/title_activity_level_select"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity

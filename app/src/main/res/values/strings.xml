@@ -13,4 +13,5 @@
     <string name="date">Date</string>
     <string name="title_activity_title_screen">title_screen</string>
     <string name="title_activity_level_select">level_select</string>
+    <string name="score">Score</string>
 </resources>

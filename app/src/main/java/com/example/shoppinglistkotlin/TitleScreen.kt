@@ -16,6 +16,7 @@ class TitleScreen : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_title_screen)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = "Rhytm Game"
 
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
@@ -34,11 +35,11 @@ class TitleScreen : AppCompatActivity() {
     }
 
     private fun onPlayClick(){
-        startActivity(Intent(this, MainActivity::class.java))
+        startActivity(Intent(this, LevelSelect::class.java))
     }
 
     private fun onShopClick(){
-        startActivity(Intent(this, MainActivity::class.java))
+
     }
 
     private fun onHowToPlayClick(){
