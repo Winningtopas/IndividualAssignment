@@ -6,13 +6,11 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.animation.AnimationUtils
 
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import java.util.*
 
 import java.util.Timer
@@ -141,9 +139,44 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCombination(){
-        var random: Int = (0..2).random()
-        //computerCombination.add(computerOptions[random])
+        showCombinationAnimation()
         winlose.text = computerCombination.toString()
+    }
+
+    private fun showCombinationAnimation(){
+        val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
+
+        var random: Int = (0..2).random()
+        computerCombination.add(computerOptions[random])
+
+        GlobalScope.launch {
+            var i = 1
+            for (combination in computerCombination){
+
+                delay(1000L)
+                println("delay test ")
+                println(combination)
+
+                println("combinatie: " + combination)
+                if (combination == "1") {
+                    btnRock.startAnimation(bounceAnimation)
+                    btnPaper.clearAnimation()
+                    btnScissors.clearAnimation()
+                }
+                if (combination == "2") {
+                    btnPaper.startAnimation(bounceAnimation)
+                    btnRock.clearAnimation()
+                    btnScissors.clearAnimation()
+                }
+                if (combination == "3") {
+                    btnScissors.startAnimation(bounceAnimation)
+                    btnRock.clearAnimation()
+                    btnPaper.clearAnimation()
+                }
+                i++
+            }
+        }
+
     }
 
     private fun onRockClick(){
