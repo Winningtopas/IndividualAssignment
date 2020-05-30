@@ -29,14 +29,31 @@ class MainActivity : AppCompatActivity() {
     private var computerHandInt: Int = 1
     private var scoreInt: Int = 0
 
-    var randomStart: Int = (0..2).random()
-    val computerOptions: Array<String> = arrayOf("1", "2", "3")
-    val computerCombination: ArrayList<String> = arrayListOf(computerOptions[randomStart])
+    //var randomStart: Int = (0..2).random()
+    private val computerOptions: Array<String> = arrayOf("0", "1", "2", "3", "4", "5") // was eerst 0 - 2
+    private val computerCombination: ArrayList<String> = arrayListOf()//computerOptions[randomStart]
 
     val playerCombination: ArrayList<String> = arrayListOf()
 
+    var numberOfPlayerInputs: Int = 0
+
+    var cantInput: Boolean = true
+
+    var speed: Float = 1.0f
+    var wrongAnswers: Int = 0
+    var correctAnswers: Int = 0
+
+    var points: Int = 0
+
 
     private lateinit var mp: MediaPlayer
+    private lateinit var drumSound: MediaPlayer
+    private lateinit var drumSound2: MediaPlayer
+    private lateinit var drumSmallSound: MediaPlayer
+    private lateinit var drumSmallSound2: MediaPlayer
+    private lateinit var tssSound: MediaPlayer
+    private lateinit var tssSound2: MediaPlayer
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +68,7 @@ class MainActivity : AppCompatActivity() {
         //sound
 
         mp = MediaPlayer.create(this, R.raw.testsound)
+
         showCombination()
     }
 
@@ -63,9 +81,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        btnRock.setOnClickListener { onRockClick() }
-        btnPaper.setOnClickListener { onPaperClick() }
-        btnScissors.setOnClickListener { onScissorsClick() }
+        //btnRock.setOnClickListener { onRockClick() }
+
+        btnBigDrumLeft.setOnClickListener { playerInput("0") }
+        btnBigDrumRight.setOnClickListener { playerInput("1") }
+        btnSmallDrumLeft.setOnClickListener { playerInput("2") }
+        btnSmallDrumRight.setOnClickListener { playerInput("3") }
+        btnTssLeft.setOnClickListener { playerInput("4") }
+        btnTssRight.setOnClickListener { playerInput("5") }
+
+
+        //btnPaper.setOnClickListener { onPaperClick() }
+        //btnScissors.setOnClickListener { onScissorsClick() }
     }
 
     private fun addProduct(playerHandIndex: Int, computerHandIndex: Int) {
@@ -115,11 +142,10 @@ class MainActivity : AppCompatActivity() {
             else -> R.drawable.scissors
         }
 
-        if(cHand == hand){
+        if (cHand == hand) {
             scoreInt++
             score.text = scoreInt.toString()
-        }
-        else{
+        } else {
             score.text = " "
         }
 
@@ -138,94 +164,180 @@ class MainActivity : AppCompatActivity() {
         addProduct(playerResourceID, computerResourceID)
     }
 
-    private fun showCombination(){
-        showCombinationAnimation()
-        winlose.text = computerCombination.toString()
+    private fun showCombination() {
+        if(wrongAnswers >= 3)
+            gameOver()
+        else{
+            showCombinationAnimation()
+            winlose.text = computerCombination.toString()
+
+            vs.text = wrongAnswers.toString()
+
+
+            playerCombination.clear()
+            numberOfPlayerInputs = 0
+        }
     }
 
-    private fun showCombinationAnimation(){
+    private fun showCombinationAnimation() {
+
+
         val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
 
-        var random: Int = (0..2).random()
+        var random: Int = (0..5).random()
         computerCombination.add(computerOptions[random])
+
+        drumSound = MediaPlayer.create(this, R.raw.drum)
+        drumSound2 = MediaPlayer.create(this, R.raw.drum2)
+        drumSmallSound = MediaPlayer.create(this, R.raw.drum_small)
+        drumSmallSound2 = MediaPlayer.create(this, R.raw.drum_small2)
+        tssSound = MediaPlayer.create(this, R.raw.tss_left)
+        tssSound2 = MediaPlayer.create(this, R.raw.tss_right)
 
         GlobalScope.launch {
             var i = 1
-            for (combination in computerCombination){
+            cantInput = true
+
+
+            for (combination in computerCombination) {
 
                 delay(1000L)
                 println("delay test ")
-                println(combination)
 
                 println("combinatie: " + combination)
+                if (combination == "0") {
+                    btnBigDrumLeft.startAnimation(bounceAnimation)
+                    btnBigDrumRight.clearAnimation()
+                    btnSmallDrumLeft.clearAnimation()
+                    btnSmallDrumRight.clearAnimation()
+                    btnTssLeft.clearAnimation()
+                    btnTssRight.clearAnimation()
+                    drumSound.start()
+
+                }
                 if (combination == "1") {
-                    btnRock.startAnimation(bounceAnimation)
-                    btnPaper.clearAnimation()
-                    btnScissors.clearAnimation()
+                    btnBigDrumRight.startAnimation(bounceAnimation)
+                    btnBigDrumLeft.clearAnimation()
+                    btnSmallDrumLeft.clearAnimation()
+                    btnSmallDrumRight.clearAnimation()
+                    btnTssLeft.clearAnimation()
+                    btnTssRight.clearAnimation()
+                    drumSound2.start()
+
                 }
                 if (combination == "2") {
-                    btnPaper.startAnimation(bounceAnimation)
-                    btnRock.clearAnimation()
-                    btnScissors.clearAnimation()
+                    btnSmallDrumLeft.startAnimation(bounceAnimation)
+                    btnBigDrumLeft.clearAnimation()
+                    btnBigDrumRight.clearAnimation()
+                    btnSmallDrumRight.clearAnimation()
+                    btnTssLeft.clearAnimation()
+                    btnTssRight.clearAnimation()
+                    drumSmallSound.start()
+
                 }
+
                 if (combination == "3") {
-                    btnScissors.startAnimation(bounceAnimation)
-                    btnRock.clearAnimation()
-                    btnPaper.clearAnimation()
+                    btnSmallDrumRight.startAnimation(bounceAnimation)
+                    btnBigDrumLeft.clearAnimation()
+                    btnBigDrumRight.clearAnimation()
+                    btnSmallDrumLeft.clearAnimation()
+                    btnTssLeft.clearAnimation()
+                    btnTssRight.clearAnimation()
+                    drumSmallSound2.start()
+
+                }
+                if (combination == "4") {
+                    btnTssLeft.startAnimation(bounceAnimation)
+                    btnBigDrumLeft.clearAnimation()
+                    btnBigDrumRight.clearAnimation()
+                    btnSmallDrumLeft.clearAnimation()
+                    btnSmallDrumRight.clearAnimation()
+                    btnTssRight.clearAnimation()
+                    tssSound.start()
+                }
+                if (combination == "5") {
+                    btnTssRight.startAnimation(bounceAnimation)
+                    btnBigDrumLeft.clearAnimation()
+                    btnBigDrumRight.clearAnimation()
+                    btnSmallDrumLeft.clearAnimation()
+                    btnSmallDrumRight.clearAnimation()
+                    btnTssLeft.clearAnimation()
+                    tssSound2.start()
+
                 }
                 i++
+
+            }
+            cantInput = false
+
+        }
+    }
+
+    private fun playerInput(playerInputVariable: String) {
+
+        val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
+
+        if (!cantInput) {
+            println("cant input text: " + cantInput)
+
+
+            if (playerInputVariable == "0"){
+                drumSound.start()
+                btnBigDrumLeft.startAnimation(bounceAnimation)
+            }
+            if (playerInputVariable == "1"){
+                drumSound2.start()
+                btnBigDrumRight.startAnimation(bounceAnimation)
+            }
+            if (playerInputVariable == "2"){
+                drumSmallSound.start()
+                btnSmallDrumLeft.startAnimation(bounceAnimation)
+            }
+            if (playerInputVariable == "3"){
+                drumSmallSound2.start()
+                btnSmallDrumRight.startAnimation(bounceAnimation)
+            }
+            if (playerInputVariable == "4"){
+                tssSound.start()
+                btnTssLeft.startAnimation(bounceAnimation)
+            }
+            if (playerInputVariable == "5"){
+                tssSound2.start()
+                btnTssRight.startAnimation(bounceAnimation)
+            }
+
+            numberOfPlayerInputs++
+
+            playerCombination.add(playerInputVariable)
+            println(playerCombination + " EN " + computerCombination + "computersize: " + computerCombination.size)
+            println(computerCombination)
+
+            if (numberOfPlayerInputs == computerCombination.size) {
+                if (playerCombination == computerCombination) {
+                    correctAnswers++
+                    score.text = "goed"
+
+                    points = correctAnswers * 10
+                    pointsTxt.text = points.toString()
+                } else {
+                    wrongAnswers++
+                    score.text = "fout het was " + computerCombination[computerCombination.lastIndex]
+                    println(playerCombination + " EN !!!! " + computerCombination)
+                    when (wrongAnswers) {
+                        1 -> cross.setImageResource(R.drawable.rock)
+                        2 -> cross1.setImageResource(R.drawable.rock)
+                        3 -> cross2.setImageResource(R.drawable.rock)
+                    }
+                }
+
+                showCombination()
             }
         }
-
     }
 
-    private fun onRockClick(){
-        playerCombination.add("1")
-        if(playerCombination == computerCombination)
-            winlose.text = "gewonnen"
-        else
-            winlose.text = "verloren het was " + computerCombination[computerCombination.lastIndex]
-
-
-
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                mp.start()
-                hand = "rock"
-                //computer()
-            }
-        }, 2000)
-
-        showCombination()
-    }
-
-    private fun onPaperClick(){
-        playerCombination.add("2")
-        if(playerCombination == computerCombination)
-            winlose.text = "gewonnen"
-        else
-            winlose.text = "verloren het was " + computerCombination[computerCombination.lastIndex]
-
-        mp.start()
-        hand = "paper"
-        computer()
-
-        showCombination()
-    }
-
-    private fun onScissorsClick(){
-        playerCombination.add("3")
-
-        if(playerCombination == computerCombination)
-            winlose.text = "gewonnen"
-        else
-            winlose.text = "verloren het was " + computerCombination[computerCombination.lastIndex]
-
-        mp.start()
-        hand = "scissors"
-        computer()
-
-        showCombination()
+    private fun gameOver(){
+        score.text = "You lose"
+        vs.text = "Yoooo"
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -247,6 +359,7 @@ class MainActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
     companion object {
         const val PRODUCT_EXTRA = "PRODUCT_EXTRA"
     }

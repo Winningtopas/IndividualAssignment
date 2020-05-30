@@ -4,64 +4,114 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:padding="8dp"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".MainActivity"
     tools:showIn="@layout/activity_main">
 
     <ImageButton
-        android:id="@+id/btnRock"
-        android:layout_width="110dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="4dp"
+        android:id="@+id/btnBigDrumLeft"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginEnd="16dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
-        android:backgroundTint="#155E4B"
+        android:backgroundTint="#00155E4B"
         android:contentDescription="TODO"
         android:scaleType="fitXY"
-        android:src="@drawable/rock"
+        android:src="@drawable/big_drum_left"
         android:text="@string/btnRock"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btnSmallDrumLeft"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageButton
-        android:id="@+id/btnPaper"
-        android:layout_width="110dp"
-        android:layout_height="80dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:id="@+id/btnBigDrumRight"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="16dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
-        android:backgroundTint="#155E4B"
+        android:backgroundTint="#00155E4B"
         android:scaleType="fitXY"
-        android:src="@drawable/paper"
+        android:src="@drawable/big_drum_right"
         android:text="@string/btnPaper"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnScissors"
-        app:layout_constraintStart_toEndOf="@+id/btnRock" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/btnSmallDrumRight" />
 
     <ImageButton
-        android:id="@+id/btnScissors"
-        android:layout_width="110dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="4dp"
+        android:id="@+id/btnSmallDrumLeft"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginStart="64dp"
         android:layout_weight="1"
         android:adjustViewBounds="true"
-        android:backgroundTint="#155E4B"
+        android:backgroundTint="#00155E4B"
         android:contentDescription="TODO"
         android:scaleType="fitXY"
-        android:src="@drawable/scissors"
+        android:src="@drawable/small_drum"
         android:text="@string/btnScissors"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnBigDrumLeft"
+        app:layout_constraintEnd_toStartOf="@+id/btnSmallDrumRight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnTssLeft" />
+
+    <ImageButton
+        android:id="@+id/btnSmallDrumRight"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginEnd="64dp"
+        android:layout_weight="1"
+        android:backgroundTint="#00155E4B"
+        android:contentDescription="TODO"
+        android:scaleType="fitXY"
+        android:src="@drawable/small_drum"
+        android:text="@string/btnScissors"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBigDrumRight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnSmallDrumLeft"
+        app:layout_constraintTop_toTopOf="@+id/btnTssRight" />
+
+    <ImageButton
+        android:id="@+id/btnTssRight"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:backgroundTint="#00155E4B"
+        android:contentDescription="TODO"
+        android:scaleType="fitXY"
+        android:src="@drawable/tss"
+        android:text="@string/btnScissors"
+        app:layout_constraintBottom_toTopOf="@+id/btnBigDrumRight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btnTssLeft" />
+
+    <ImageButton
+        android:id="@+id/btnTssLeft"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:backgroundTint="#00155E4B"
+        android:contentDescription="TODO"
+        android:orientation="horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/tss"
+        android:text="@string/btnScissors"
+        app:layout_constraintBottom_toTopOf="@+id/btnBigDrumLeft"
+        app:layout_constraintEnd_toStartOf="@+id/btnTssRight"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/computerHand"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
         android:background="#0E4133"
@@ -73,8 +123,8 @@
 
     <ImageView
         android:id="@+id/playerHand"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="10dp"
+        android:layout_height="10dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:background="#0E4133"
@@ -102,16 +152,16 @@
         android:id="@+id/winlose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/winLose"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toBottomOf="@+id/pointsTxt" />
 
     <TextView
-        android:id="@+id/welcome"
+        android:id="@+id/pointsTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -120,16 +170,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/instructions"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:text="Instructions: select rock, paper or scissors to play."
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <TextView
         android:id="@+id/you"
@@ -151,17 +191,6 @@
         app:layout_constraintStart_toStartOf="@+id/computerHand"
         app:layout_constraintTop_toBottomOf="@+id/computerHand" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="1000dp"
-        android:layout_height="10dp"
-        android:layout_marginTop="16dp"
-        android:background="#155E4B"
-        android:backgroundTint="#155E4B"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instructions" />
-
     <TextView
         android:id="@+id/score"
         android:layout_width="wrap_content"
@@ -171,5 +200,71 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/winlose" />
+
+    <ImageView
+        android:id="@+id/cross2"
+        android:layout_width="40dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pointsTxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/pointsTxt"
+        app:srcCompat="@drawable/paper" />
+
+    <ImageView
+        android:id="@+id/cross1"
+        android:layout_width="40dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pointsTxt"
+        app:layout_constraintEnd_toStartOf="@+id/cross2"
+        app:layout_constraintTop_toTopOf="@+id/pointsTxt"
+        app:srcCompat="@drawable/paper" />
+
+    <ImageView
+        android:id="@+id/cross"
+        android:layout_width="40dp"
+        android:layout_height="54dp"
+        android:layout_marginEnd="4dp"
+        app:layout_constraintBottom_toBottomOf="@+id/pointsTxt"
+        app:layout_constraintEnd_toStartOf="@+id/cross1"
+        app:layout_constraintTop_toTopOf="@+id/pointsTxt"
+        app:srcCompat="@drawable/paper" />
+
+    <ImageView
+        android:id="@+id/podium"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginBottom="64dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/btnBigDrumRight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/podium" />
+
+    <ImageView
+        android:id="@+id/boxLeft"
+        android:layout_width="78dp"
+        android:layout_height="184dp"
+
+        android:layout_marginBottom="128dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/podium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/podium"
+        app:srcCompat="@drawable/box" />
+
+    <ImageView
+        android:id="@+id/boxRight"
+        android:layout_width="78dp"
+        android:layout_height="184dp"
+
+        android:layout_marginBottom="128dp"
+        android:scaleType="centerInside"
+        app:layout_constraintBottom_toBottomOf="@+id/podium"
+        app:layout_constraintEnd_toEndOf="@+id/podium"
+        app:layout_constraintTop_toTopOf="@+id/podium"
+        app:srcCompat="@drawable/box" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

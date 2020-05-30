@@ -23,9 +23,9 @@ class TitleScreen : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
         initViews()
-        mp = MediaPlayer.create(this, R.raw.titlemusic)
-        mp.isLooping = true
-        mp.start()
+        //mp = MediaPlayer.create(this, R.raw.titlemusic)
+        //mp.isLooping = true
+        //mp.start()
     }
 
     private fun initViews() {
