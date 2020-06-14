@@ -22,9 +22,9 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(product: Product) {
-            itemView.ivHistoryComputerHand.setImageResource(product.computerHand)
-            itemView.ivHistoryPlayerHand.setImageResource(product.playerHand)
-            itemView.tvHistoryWinLose.text = product.winner
+            //itemView.ivHistoryComputerHand.setImageResource(product.computerHand)
+            //itemView.ivHistoryPlayerHand.setImageResource(product.playerHand)
+            itemView.tvHistoryWinLose.text = "Score: " + product.computerHand.toString()
             itemView.tvHistoryDate.text = product.date.toString()
 
 

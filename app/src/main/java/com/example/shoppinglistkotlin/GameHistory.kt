@@ -52,6 +52,7 @@ class GameHistory : AppCompatActivity() {
         Collections.reverse(products)
 
         getShoppingListFromDatabase()
+
     }
 
     private fun getShoppingListFromDatabase() {
@@ -93,6 +94,4 @@ class GameHistory : AppCompatActivity() {
             getShoppingListFromDatabase()
         }
     }
-
-
 }

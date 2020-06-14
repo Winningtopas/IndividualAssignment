@@ -13,10 +13,6 @@ import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.*
 import java.util.*
 
-import java.util.Timer
-import kotlin.concurrent.fixedRateTimer
-import kotlin.concurrent.schedule
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var productRepository: ProductRepository
@@ -39,11 +35,12 @@ class MainActivity : AppCompatActivity() {
 
     var cantInput: Boolean = true
 
-    var speed: Float = 1.0f
+    var speed: Float = 75f
     var wrongAnswers: Int = 0
     var correctAnswers: Int = 0
 
     var points: Int = 0
+    var starCount: Int = 0
 
 
     private lateinit var mp: MediaPlayer
@@ -94,13 +91,13 @@ class MainActivity : AppCompatActivity() {
         //btnPaper.setOnClickListener { onPaperClick() }
         //btnScissors.setOnClickListener { onScissorsClick() }
     }
-
     private fun addProduct(playerHandIndex: Int, computerHandIndex: Int) {
+    //private fun addProduct(points: Int) {
         mainScope.launch {
             val currentTime = Calendar.getInstance().time
             val product = Product(
 
-                computerHand = computerHandIndex,
+                computerHand = points,
                 playerHand = playerHandIndex,
                 winner = winlose.text.toString(),
                 date = currentTime
@@ -161,7 +158,6 @@ class MainActivity : AppCompatActivity() {
 
  */
 
-        addProduct(playerResourceID, computerResourceID)
     }
 
     private fun showCombination() {
@@ -196,13 +192,15 @@ class MainActivity : AppCompatActivity() {
 
         GlobalScope.launch {
             var i = 1
+            var currentSpeed = 1000f
             cantInput = true
 
 
             for (combination in computerCombination) {
-
-                delay(1000L)
-                println("delay test ")
+                if(currentSpeed <= 400f)
+                currentSpeed -= speed
+                delay(currentSpeed.toLong())
+                stopSound()
 
                 println("combinatie: " + combination)
                 if (combination == "0") {
@@ -232,6 +230,7 @@ class MainActivity : AppCompatActivity() {
                     btnSmallDrumRight.clearAnimation()
                     btnTssLeft.clearAnimation()
                     btnTssRight.clearAnimation()
+                    stopSound()
                     drumSmallSound.start()
 
                 }
@@ -273,13 +272,33 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun stopSound(){
+        if(drumSound.isPlaying)
+            drumSound.stop()
+
+        if(drumSound2.isPlaying)
+            drumSound2.stop()
+
+        if(drumSmallSound.isPlaying)
+            drumSmallSound.stop()
+
+        if(drumSmallSound2.isPlaying)
+            drumSmallSound2.stop()
+
+        if(tssSound.isPlaying)
+            tssSound.stop()
+
+        if(tssSound2.isPlaying)
+            tssSound2.stop()
+    }
+
     private fun playerInput(playerInputVariable: String) {
 
         val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
 
         if (!cantInput) {
             println("cant input text: " + cantInput)
-
+            stopSound() // remove if broken
 
             if (playerInputVariable == "0"){
                 drumSound.start()
@@ -309,8 +328,8 @@ class MainActivity : AppCompatActivity() {
             numberOfPlayerInputs++
 
             playerCombination.add(playerInputVariable)
-            println(playerCombination + " EN " + computerCombination + "computersize: " + computerCombination.size)
-            println(computerCombination)
+            //println(playerCombination + " EN " + computerCombination + "computersize: " + computerCombination.size)
+            //println(computerCombination)
 
             if (numberOfPlayerInputs == computerCombination.size) {
                 if (playerCombination == computerCombination) {
@@ -319,6 +338,7 @@ class MainActivity : AppCompatActivity() {
 
                     points = correctAnswers * 10
                     pointsTxt.text = points.toString()
+                    starCalculations()
                 } else {
                     wrongAnswers++
                     score.text = "fout het was " + computerCombination[computerCombination.lastIndex]
@@ -335,9 +355,47 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun starCalculations(){
+        if(points >= 10){//30
+            starCount = 1
+            if(points >= 70){
+                starCount = 2
+                if(points >= 100)
+                    starCount = 3
+            }
+        }
+        else
+            starCount = 0
+
+        when (starCount) {
+            1 -> ivStar1g.setImageResource(R.drawable.star)
+            2 -> {ivStar1g.setImageResource(R.drawable.star)
+                ivStar2g.setImageResource(R.drawable.star)}
+            3 -> {ivStar1g.setImageResource(R.drawable.star)
+                ivStar2g.setImageResource(R.drawable.star)
+                ivStar3g.setImageResource(R.drawable.star)}
+            else -> { // Note the block
+                print("starCount is wrong")
+            }
+        }
+        println("starCount: " + starCount)
+    }
+
     private fun gameOver(){
         score.text = "You lose"
         vs.text = "Yoooo"
+
+        var playerResourceID: Int = 1
+        var computerResourceID: Int = 1
+
+        addProduct(playerResourceID, computerResourceID)
+        //gameOverPopUp()
+    }
+
+    private fun gameOverPopUp(){
+        val profileActivityIntent = Intent(this, GameHistory::class.java)
+        startActivity(profileActivityIntent)
+        true
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

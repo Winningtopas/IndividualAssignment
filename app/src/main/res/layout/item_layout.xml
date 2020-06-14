@@ -21,39 +21,48 @@
         android:id="@+id/tvHistoryWinLose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="@string/winLose"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/ivHistoryComputerHand"
+        android:id="@+id/ivStar1g"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
-        android:background="#0E4133"
-        android:backgroundTint="#0E4133"
+        android:layout_marginStart="128dp"
         android:contentDescription="@string/computerhand"
-        app:layout_constraintEnd_toStartOf="@+id/tvHistoryVS"
-        app:layout_constraintTop_toBottomOf="@+id/tvHistoryDate"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
+        android:src="@drawable/star_empty"
+        app:layout_constraintEnd_toStartOf="@+id/ivStar2g"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvHistoryDate" />
 
     <ImageView
-        android:id="@+id/ivHistoryPlayerHand"
+        android:id="@+id/ivStar2g"
         android:layout_width="64dp"
         android:layout_height="64dp"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
-        android:background="#0E4133"
-        android:backgroundTint="#0E4133"
         android:contentDescription="@string/playerhand"
-        app:layout_constraintStart_toEndOf="@+id/tvHistoryVS"
-        app:layout_constraintTop_toBottomOf="@+id/tvHistoryDate"
-        app:srcCompat="@android:drawable/alert_dark_frame" />
+        android:src="@drawable/star_empty"
+        app:layout_constraintEnd_toStartOf="@+id/ivStar3g"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivStar1g"
+        app:layout_constraintTop_toBottomOf="@+id/tvHistoryDate" />
+
+    <ImageView
+        android:id="@+id/ivStar3g"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginEnd="128dp"
+        android:contentDescription="@string/playerhand"
+        android:src="@drawable/star_empty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/ivStar2g"
+        app:layout_constraintTop_toBottomOf="@+id/tvHistoryDate" />
 
     <TextView
         android:id="@+id/tvHistoryVS"
@@ -62,29 +71,9 @@
         android:text="V.S."
         android:textSize="30sp"
         android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="@+id/ivHistoryPlayerHand"
+        app:layout_constraintBottom_toBottomOf="@+id/ivStar2g"
         app:layout_constraintEnd_toEndOf="@+id/tvHistoryDate"
         app:layout_constraintStart_toStartOf="@+id/tvHistoryDate"
         app:layout_constraintTop_toTopOf="@+id/ivHistoryPlayerHand" />
-
-    <TextView
-        android:id="@+id/tvHistoryComputer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Computer"
-        app:layout_constraintEnd_toEndOf="@+id/ivHistoryComputerHand"
-        app:layout_constraintStart_toStartOf="@+id/ivHistoryComputerHand"
-        app:layout_constraintTop_toBottomOf="@+id/ivHistoryComputerHand" />
-
-    <TextView
-        android:id="@+id/tvHistoryYou"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="You"
-        app:layout_constraintEnd_toEndOf="@+id/ivHistoryPlayerHand"
-        app:layout_constraintStart_toStartOf="@+id/ivHistoryPlayerHand"
-        app:layout_constraintTop_toBottomOf="@+id/ivHistoryPlayerHand" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

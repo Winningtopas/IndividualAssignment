@@ -3,22 +3,22 @@ package com.example.shoppinglistkotlin
 import android.content.Context
 
 
-    class ProductRepository(context: Context) {
+class ProductRepository(context: Context) {
 
-        private val productDao: ProductDao
+    private val productDao: ProductDao
 
-        init {
+    init {
 
-            val database = ShoppingListRoomDatabase.getDatabase(context)
-            productDao = database!!.productDao()
-        }
-
-        suspend fun getAllProducts(): List<Product> = productDao.getAllProducts()
-
-        suspend fun insertProduct(product: Product) = productDao.insertProduct(product)
-
-        suspend fun deleteProduct(product: Product) = productDao.deleteProduct(product)
-
-        suspend fun deleteAllProducts() = productDao.deleteAllProducts()
-
+        val database = ShoppingListRoomDatabase.getDatabase(context)
+        productDao = database!!.productDao()
     }
+
+    suspend fun getAllProducts(): List<Product> = productDao.getAllProducts()
+
+    suspend fun insertProduct(product: Product) = productDao.insertProduct(product)
+
+    suspend fun deleteProduct(product: Product) = productDao.deleteProduct(product)
+
+    suspend fun deleteAllProducts() = productDao.deleteAllProducts()
+
+}
