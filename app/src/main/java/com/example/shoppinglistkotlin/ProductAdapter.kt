@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.android.synthetic.main.content_main.view.*
 import kotlinx.android.synthetic.main.item_layout.view.*
 
@@ -27,7 +28,21 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
             itemView.tvHistoryWinLose.text = "Score: " + product.computerHand.toString()
             itemView.tvHistoryDate.text = product.date.toString()
 
-
+            when (product.stars) {
+                1 -> itemView.ivStar1gold.setImageResource(R.drawable.star)
+                2 -> {
+                    itemView.ivStar1gold.setImageResource(R.drawable.star)
+                    itemView.ivStar2gold.setImageResource(R.drawable.star)
+                }
+                3 -> {
+                    itemView.ivStar1gold.setImageResource(R.drawable.star)
+                    itemView.ivStar2gold.setImageResource(R.drawable.star)
+                    itemView.ivStar3gold.setImageResource(R.drawable.star)
+                }
+                else -> { // Note the block
+                    print("starCount is wrong")
+                }
+            }
 
            // itemView.tvProduct.text = product.name
            // itemView.tvQuantity.text = product.quantity.toString()

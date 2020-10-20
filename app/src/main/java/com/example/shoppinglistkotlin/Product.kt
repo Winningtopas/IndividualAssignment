@@ -25,6 +25,9 @@ data class Product(
     var winner: String,
 
     @ColumnInfo(name = "date")
-    var date: Date
+    var date: Date,
+
+    @ColumnInfo(name = "stars")
+    var stars: Int
 
 ) : Parcelable

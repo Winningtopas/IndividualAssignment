@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.content_main.*
@@ -66,6 +68,9 @@ class MainActivity : AppCompatActivity() {
 
         mp = MediaPlayer.create(this, R.raw.testsound)
 
+        //test hidden objects
+        hiddenTest.visibility = View.GONE
+
         showCombination()
     }
 
@@ -100,7 +105,8 @@ class MainActivity : AppCompatActivity() {
                 computerHand = points,
                 playerHand = playerHandIndex,
                 winner = winlose.text.toString(),
-                date = currentTime
+                date = currentTime,
+                stars = starCount
             )
 
             withContext(Dispatchers.IO) {
@@ -172,6 +178,7 @@ class MainActivity : AppCompatActivity() {
 
             playerCombination.clear()
             numberOfPlayerInputs = 0
+
         }
     }
 
@@ -298,7 +305,6 @@ class MainActivity : AppCompatActivity() {
 
         if (!cantInput) {
             println("cant input text: " + cantInput)
-            stopSound() // remove if broken
 
             if (playerInputVariable == "0"){
                 drumSound.start()
@@ -389,13 +395,16 @@ class MainActivity : AppCompatActivity() {
         var computerResourceID: Int = 1
 
         addProduct(playerResourceID, computerResourceID)
+        gameOverPopUp()
         //gameOverPopUp()
     }
 
     private fun gameOverPopUp(){
-        val profileActivityIntent = Intent(this, GameHistory::class.java)
-        startActivity(profileActivityIntent)
-        true
+        //val profileActivityIntent = Intent(this, GameHistory::class.java)
+        //startActivity(profileActivityIntent)
+        //true
+
+        hiddenTest.visibility = View.VISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
