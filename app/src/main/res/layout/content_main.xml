@@ -134,38 +134,38 @@
         app:layout_constraintTop_toBottomOf="@+id/winlose"
         app:srcCompat="@android:drawable/alert_dark_frame" />
 
-    <TextView
-        android:id="@+id/vs"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="V.S."
-        android:textSize="30sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toBottomOf="@+id/computerHand"
-        app:layout_constraintEnd_toStartOf="@+id/playerHand"
-        app:layout_constraintStart_toEndOf="@+id/computerHand"
-        app:layout_constraintTop_toTopOf="@+id/computerHand" />
+<!--    <TextView-->
+<!--        android:id="@+id/vs"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginEnd="16dp"-->
+<!--        android:text="V.S."-->
+<!--        android:textSize="30sp"-->
+<!--        android:textStyle="bold|italic"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/computerHand"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/playerHand"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/computerHand"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/computerHand" />-->
 
-    <TextView
-        android:id="@+id/winlose"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/winLose"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pointsTxt" />
+<!--    <TextView-->
+<!--        android:id="@+id/winlose"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:text="@string/winLose"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/pointsTxt" />-->
 
     <TextView
         android:id="@+id/pointsTxt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="100"
+        android:text=""
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -191,15 +191,15 @@
         app:layout_constraintStart_toStartOf="@+id/computerHand"
         app:layout_constraintTop_toBottomOf="@+id/computerHand" />
 
-    <TextView
-        android:id="@+id/score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/score"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/winlose" />
+<!--    <TextView-->
+<!--        android:id="@+id/score"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="8dp"-->
+<!--        android:text="@string/score"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/winlose" />-->
 
     <ImageView
         android:id="@+id/cross2"
@@ -290,6 +290,52 @@
         app:layout_constraintStart_toEndOf="@+id/ivStar1g"
         app:layout_constraintTop_toBottomOf="@+id/tvHistoryDate" />
 
+<!--Hidden-->
+    <ImageView
+        android:id="@+id/hiddenTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/box"
+        tools:layout_editor_absoluteY="83dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pointsTxt" />
+
+
+    <ImageView
+        android:id="@+id/ivStar1hidden"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="4dp"
+        android:contentDescription="@string/computerhand"
+        android:src="@drawable/star_empty"
+        app:layout_constraintEnd_toStartOf="@+id/ivStar2hidden"
+        app:layout_constraintStart_toEndOf="@+id/ivStar2g"
+        app:layout_constraintTop_toTopOf="@+id/ivStar2hidden" />
+
+    <ImageView
+        android:id="@+id/ivStar2hidden"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="16dp"
+        android:contentDescription="@string/playerhand"
+        android:src="@drawable/star_empty"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/hiddenTest" />
+
+    <ImageView
+        android:id="@+id/ivStar3hidden"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="4dp"
+        android:contentDescription="@string/playerhand"
+        android:src="@drawable/star_empty"
+        app:layout_constraintStart_toEndOf="@+id/ivStar2hidden"
+        app:layout_constraintTop_toTopOf="@+id/ivStar2hidden" />
+
     <ImageView
         android:id="@+id/ivStar3g"
         android:layout_width="48dp"
@@ -302,13 +348,6 @@
         app:layout_constraintStart_toEndOf="@+id/ivStar2g"
         app:layout_constraintTop_toBottomOf="@+id/tvHistoryDate" />
 
-    <ImageView
-        android:id="@+id/hiddenTest"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/boxRight"
-        app:layout_constraintStart_toEndOf="@+id/boxLeft"
-        app:srcCompat="@drawable/box"
-        tools:layout_editor_absoluteY="83dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

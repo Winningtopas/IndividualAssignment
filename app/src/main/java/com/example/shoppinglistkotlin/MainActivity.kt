@@ -17,6 +17,9 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
+    private val products = arrayListOf<Product>()
+    private val productAdapter = ProductAdapter(products)
+
     private lateinit var productRepository: ProductRepository
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
@@ -68,8 +71,11 @@ class MainActivity : AppCompatActivity() {
 
         mp = MediaPlayer.create(this, R.raw.testsound)
 
-        //test hidden objects
+        //hide hidden objects
         hiddenTest.visibility = View.GONE
+        ivStar1hidden.visibility = View.GONE
+        ivStar2hidden.visibility = View.GONE
+        ivStar3hidden.visibility = View.GONE
 
         showCombination()
     }
@@ -104,7 +110,7 @@ class MainActivity : AppCompatActivity() {
 
                 computerHand = points,
                 playerHand = playerHandIndex,
-                winner = winlose.text.toString(),
+                //winner = winlose.text.toString(),
                 date = currentTime,
                 stars = starCount
             )
@@ -147,9 +153,9 @@ class MainActivity : AppCompatActivity() {
 
         if (cHand == hand) {
             scoreInt++
-            score.text = scoreInt.toString()
-        } else {
-            score.text = " "
+//            score.text = scoreInt.toString()
+//        } else {
+//            score.text = " "
         }
 
         playerHand.setImageResource(playerResourceID)
@@ -171,9 +177,9 @@ class MainActivity : AppCompatActivity() {
             gameOver()
         else{
             showCombinationAnimation()
-            winlose.text = computerCombination.toString()
+            //winlose.text = computerCombination.toString()
 
-            vs.text = wrongAnswers.toString()
+            //vs.text = wrongAnswers.toString()
 
 
             playerCombination.clear()
@@ -340,14 +346,19 @@ class MainActivity : AppCompatActivity() {
             if (numberOfPlayerInputs == computerCombination.size) {
                 if (playerCombination == computerCombination) {
                     correctAnswers++
-                    score.text = "goed"
+                    //score.text = "goed"
 
                     points = correctAnswers * 10
-                    pointsTxt.text = points.toString()
+                    if(points != 0){
+                        pointsTxt.text = points.toString()
+                    }
+                    else{
+                        pointsTxt.text = "0"
+                    }
                     starCalculations()
                 } else {
                     wrongAnswers++
-                    score.text = "fout het was " + computerCombination[computerCombination.lastIndex]
+                    //score.text = "fout het was " + computerCombination[computerCombination.lastIndex]
                     println(playerCombination + " EN !!!! " + computerCombination)
                     when (wrongAnswers) {
                         1 -> cross.setImageResource(R.drawable.rock)
@@ -374,12 +385,18 @@ class MainActivity : AppCompatActivity() {
             starCount = 0
 
         when (starCount) {
-            1 -> ivStar1g.setImageResource(R.drawable.star)
+            1 -> {ivStar1g.setImageResource(R.drawable.star)
+                ivStar1hidden.setImageResource(R.drawable.star)}
             2 -> {ivStar1g.setImageResource(R.drawable.star)
-                ivStar2g.setImageResource(R.drawable.star)}
+                ivStar2g.setImageResource(R.drawable.star)
+                ivStar1hidden.setImageResource(R.drawable.star)
+                ivStar2hidden.setImageResource(R.drawable.star)}
             3 -> {ivStar1g.setImageResource(R.drawable.star)
                 ivStar2g.setImageResource(R.drawable.star)
-                ivStar3g.setImageResource(R.drawable.star)}
+                ivStar3g.setImageResource(R.drawable.star)
+                ivStar1hidden.setImageResource(R.drawable.star)
+                ivStar2hidden.setImageResource(R.drawable.star)
+                ivStar3hidden.setImageResource(R.drawable.star)}
             else -> { // Note the block
                 print("starCount is wrong")
             }
@@ -388,8 +405,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameOver(){
-        score.text = "You lose"
-        vs.text = "Yoooo"
+        //score.text = "You lose"
+        //vs.text = "Yoooo"
 
         var playerResourceID: Int = 1
         var computerResourceID: Int = 1
@@ -403,8 +420,10 @@ class MainActivity : AppCompatActivity() {
         //val profileActivityIntent = Intent(this, GameHistory::class.java)
         //startActivity(profileActivityIntent)
         //true
-
         hiddenTest.visibility = View.VISIBLE
+        ivStar1hidden.visibility = View.VISIBLE
+        ivStar2hidden.visibility = View.VISIBLE
+        ivStar3hidden.visibility = View.VISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

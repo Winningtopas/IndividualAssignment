@@ -21,8 +21,8 @@ data class Product(
     @ColumnInfo(name = "playerHand")
     var playerHand: Int,
 
-    @ColumnInfo(name = "winner")
-    var winner: String,
+//    @ColumnInfo(name = "winner")
+//    var winner: String,
 
     @ColumnInfo(name = "date")
     var date: Date,
