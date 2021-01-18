@@ -12,6 +12,7 @@ import kotlinx.android.synthetic.main.content_title_screen.*
 
 class TitleScreen : AppCompatActivity() {
 
+    public var Test = 3;
     private lateinit var mp: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,9 +26,9 @@ class TitleScreen : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
         initViews()
-        //mp = MediaPlayer.create(this, R.raw.titlemusic)
-        //mp.isLooping = true
-        //mp.start()
+        mp = MediaPlayer.create(this, R.raw.titlemusic)
+        mp.isLooping = true
+        mp.start()
     }
 
     private fun initViews() {
@@ -36,7 +37,12 @@ class TitleScreen : AppCompatActivity() {
         btnHowToPlay.setOnClickListener { onHowToPlayClick() }
     }
 
+    override fun onBackPressed() {
+
+    }
+
     private fun onPlayClick(){
+        mp.stop()
         startActivity(Intent(this, LevelSelect::class.java))
     }
 
@@ -45,6 +51,7 @@ class TitleScreen : AppCompatActivity() {
     }
 
     private fun onHowToPlayClick(){
+        mp.stop()
         startActivity(Intent(this, MainActivity::class.java))
     }
 

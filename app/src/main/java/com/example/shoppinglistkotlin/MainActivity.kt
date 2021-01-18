@@ -3,14 +3,12 @@ package com.example.shoppinglistkotlin
 import android.content.Intent
 import android.media.MediaPlayer
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
-import androidx.core.view.isVisible
-
-import kotlinx.android.synthetic.main.activity_main.toolbar
+import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.*
 import java.util.*
@@ -31,7 +29,8 @@ class MainActivity : AppCompatActivity() {
     private var scoreInt: Int = 0
 
     //var randomStart: Int = (0..2).random()
-    private val computerOptions: Array<String> = arrayOf("0", "1", "2", "3", "4", "5") // was eerst 0 - 2
+    private val computerOptions: Array<String> =
+        arrayOf("0", "1", "2", "3", "4", "5") // was eerst 0 - 2
     private val computerCombination: ArrayList<String> = arrayListOf()//computerOptions[randomStart]
 
     val playerCombination: ArrayList<String> = arrayListOf()
@@ -46,7 +45,6 @@ class MainActivity : AppCompatActivity() {
 
     var points: Int = 0
     var starCount: Int = 0
-
 
     private lateinit var mp: MediaPlayer
     private lateinit var drumSound: MediaPlayer
@@ -77,6 +75,10 @@ class MainActivity : AppCompatActivity() {
         ivStar2hidden.visibility = View.GONE
         ivStar3hidden.visibility = View.GONE
 
+        btnRetry.visibility = View.GONE
+        btnLevelSelect.visibility = View.GONE
+        btnTitleScreen.visibility = View.GONE
+
         showCombination()
     }
 
@@ -98,12 +100,36 @@ class MainActivity : AppCompatActivity() {
         btnTssLeft.setOnClickListener { playerInput("4") }
         btnTssRight.setOnClickListener { playerInput("5") }
 
+        btnRetry.setOnClickListener { onRetry() }
+        btnLevelSelect.setOnClickListener { onLevelSelect() }
+        btnTitleScreen.setOnClickListener { onTitleScreen() }
+
 
         //btnPaper.setOnClickListener { onPaperClick() }
         //btnScissors.setOnClickListener { onScissorsClick() }
     }
+
+    override fun onBackPressed() {
+
+    }
+
+    private fun onRetry() {
+        finish()
+        startActivity(Intent(this, MainActivity::class.java))
+    }
+
+    private fun onLevelSelect() {
+        finish()
+        startActivity(Intent(this, LevelSelect::class.java))
+    }
+
+    private fun onTitleScreen() {
+        finish()
+        startActivity(Intent(this, TitleScreen::class.java))
+    }
+
     private fun addProduct(playerHandIndex: Int, computerHandIndex: Int) {
-    //private fun addProduct(points: Int) {
+        //private fun addProduct(points: Int) {
         mainScope.launch {
             val currentTime = Calendar.getInstance().time
             val product = Product(
@@ -157,9 +183,6 @@ class MainActivity : AppCompatActivity() {
 //        } else {
 //            score.text = " "
         }
-
-        playerHand.setImageResource(playerResourceID)
-        computerHand.setImageResource(computerResourceID)
 /*
         if(cHand == hand)
             winlose.text = "Draw"
@@ -173,9 +196,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCombination() {
-        if(wrongAnswers >= 3)
+        if (wrongAnswers >= 3)
             gameOver()
-        else{
+        else {
             showCombinationAnimation()
             //winlose.text = computerCombination.toString()
 
@@ -210,8 +233,8 @@ class MainActivity : AppCompatActivity() {
 
 
             for (combination in computerCombination) {
-                if(currentSpeed <= 400f)
-                currentSpeed -= speed
+                if (currentSpeed <= 400f)
+                    currentSpeed -= speed
                 delay(currentSpeed.toLong())
                 stopSound()
 
@@ -243,7 +266,6 @@ class MainActivity : AppCompatActivity() {
                     btnSmallDrumRight.clearAnimation()
                     btnTssLeft.clearAnimation()
                     btnTssRight.clearAnimation()
-                    stopSound()
                     drumSmallSound.start()
 
                 }
@@ -285,25 +307,73 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun stopSound(){
-        if(drumSound.isPlaying)
+    private fun stopSound() {
+        println("stopSound isPlaying")
+
+        if (drumSound.isPlaying) {
+            println("drumSound isPlaying")
+            drumSound.reset()
+            drumSound.seekTo(0)
             drumSound.stop()
+        }
 
-        if(drumSound2.isPlaying)
+        if (drumSound2.isPlaying){
+            println("drumSound2 isPlaying")
+            drumSound2.reset()
+            drumSound2.seekTo(0)
             drumSound2.stop()
+        }
 
-        if(drumSmallSound.isPlaying)
+        if (drumSmallSound.isPlaying){
+            println("drumSmallSound isPlaying")
+            drumSmallSound.reset()
+            drumSmallSound.seekTo(0)
             drumSmallSound.stop()
+        }
 
-        if(drumSmallSound2.isPlaying)
+        if (drumSmallSound2.isPlaying){
+            println("drumSmallSound2 message")
+            drumSmallSound2.reset()
+            drumSmallSound2.seekTo(0)
             drumSmallSound2.stop()
+        }
 
-        if(tssSound.isPlaying)
+        if (tssSound.isPlaying){
+            println("tssSound isPlaying")
+            tssSound.reset()
+            tssSound.seekTo(0)
             tssSound.stop()
+        }
 
-        if(tssSound2.isPlaying)
+        if (tssSound2.isPlaying){
+            println("tssSound2 isPlaying")
+            tssSound2.reset()
+            tssSound2.seekTo(0)
             tssSound2.stop()
+        }
     }
+
+
+//    private fun stopSound(){
+//        if(drumSound.isPlaying)
+//            drumSound.stop()
+//
+//        if(drumSound2.isPlaying)
+//            drumSound2.stop()
+//
+//        if(drumSmallSound.isPlaying)
+//            drumSmallSound.stop()
+//
+//        if(drumSmallSound2.isPlaying)
+//            drumSmallSound2.stop()
+//
+//        if(tssSound.isPlaying)
+//            tssSound.stop()
+//
+//        if(tssSound2.isPlaying)
+//            tssSound2.stop()
+//    }
+
 
     private fun playerInput(playerInputVariable: String) {
 
@@ -312,30 +382,57 @@ class MainActivity : AppCompatActivity() {
         if (!cantInput) {
             println("cant input text: " + cantInput)
 
-            if (playerInputVariable == "0"){
-                drumSound.start()
-                btnBigDrumLeft.startAnimation(bounceAnimation)
+            when (playerInputVariable) {
+                "0" -> {
+                    drumSound.start()
+                    btnBigDrumLeft.startAnimation(bounceAnimation)
+                }
+                "1" -> {
+                    drumSound2.start()
+                    btnBigDrumRight.startAnimation(bounceAnimation)
+                }
+                "2" -> {
+                    drumSmallSound.start()
+                    btnSmallDrumLeft.startAnimation(bounceAnimation)
+                }
+                "3" -> {
+                    drumSmallSound2.start()
+                    btnSmallDrumRight.startAnimation(bounceAnimation)
+                }
+                "4" -> {
+                    tssSound.start()
+                    btnTssLeft.startAnimation(bounceAnimation)
+                }
+                "5" -> {
+                    tssSound2.start()
+                    btnTssRight.startAnimation(bounceAnimation)
+                }
             }
-            if (playerInputVariable == "1"){
-                drumSound2.start()
-                btnBigDrumRight.startAnimation(bounceAnimation)
-            }
-            if (playerInputVariable == "2"){
-                drumSmallSound.start()
-                btnSmallDrumLeft.startAnimation(bounceAnimation)
-            }
-            if (playerInputVariable == "3"){
-                drumSmallSound2.start()
-                btnSmallDrumRight.startAnimation(bounceAnimation)
-            }
-            if (playerInputVariable == "4"){
-                tssSound.start()
-                btnTssLeft.startAnimation(bounceAnimation)
-            }
-            if (playerInputVariable == "5"){
-                tssSound2.start()
-                btnTssRight.startAnimation(bounceAnimation)
-            }
+
+//            if (playerInputVariable == "0"){
+//                drumSound.start()
+//                btnBigDrumLeft.startAnimation(bounceAnimation)
+//            }
+//            if (playerInputVariable == "1"){
+//                drumSound2.start()
+//                btnBigDrumRight.startAnimation(bounceAnimation)
+//            }
+//            if (playerInputVariable == "2"){
+//                drumSmallSound.start()
+//                btnSmallDrumLeft.startAnimation(bounceAnimation)
+//            }
+//            if (playerInputVariable == "3"){
+//                drumSmallSound2.start()
+//                btnSmallDrumRight.startAnimation(bounceAnimation)
+//            }
+//            if (playerInputVariable == "4"){
+//                tssSound.start()
+//                btnTssLeft.startAnimation(bounceAnimation)
+//            }
+//            if (playerInputVariable == "5"){
+//                tssSound2.start()
+//                btnTssRight.startAnimation(bounceAnimation)
+//            }
 
             numberOfPlayerInputs++
 
@@ -349,10 +446,9 @@ class MainActivity : AppCompatActivity() {
                     //score.text = "goed"
 
                     points = correctAnswers * 10
-                    if(points != 0){
+                    if (points != 0) {
                         pointsTxt.text = points.toString()
-                    }
-                    else{
+                    } else {
                         pointsTxt.text = "0"
                     }
                     starCalculations()
@@ -372,31 +468,36 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun starCalculations(){
-        if(points >= 10){//30
+    fun starCalculations() {
+        if (points >= 30) {//30
             starCount = 1
-            if(points >= 70){
+            if (points >= 50) {
                 starCount = 2
-                if(points >= 100)
+                if (points >= 70)
                     starCount = 3
             }
-        }
-        else
+        } else
             starCount = 0
 
         when (starCount) {
-            1 -> {ivStar1g.setImageResource(R.drawable.star)
-                ivStar1hidden.setImageResource(R.drawable.star)}
-            2 -> {ivStar1g.setImageResource(R.drawable.star)
+            1 -> {
+                ivStar1g.setImageResource(R.drawable.star)
+                ivStar1hidden.setImageResource(R.drawable.star)
+            }
+            2 -> {
+                ivStar1g.setImageResource(R.drawable.star)
                 ivStar2g.setImageResource(R.drawable.star)
                 ivStar1hidden.setImageResource(R.drawable.star)
-                ivStar2hidden.setImageResource(R.drawable.star)}
-            3 -> {ivStar1g.setImageResource(R.drawable.star)
+                ivStar2hidden.setImageResource(R.drawable.star)
+            }
+            3 -> {
+                ivStar1g.setImageResource(R.drawable.star)
                 ivStar2g.setImageResource(R.drawable.star)
                 ivStar3g.setImageResource(R.drawable.star)
                 ivStar1hidden.setImageResource(R.drawable.star)
                 ivStar2hidden.setImageResource(R.drawable.star)
-                ivStar3hidden.setImageResource(R.drawable.star)}
+                ivStar3hidden.setImageResource(R.drawable.star)
+            }
             else -> { // Note the block
                 print("starCount is wrong")
             }
@@ -404,7 +505,7 @@ class MainActivity : AppCompatActivity() {
         println("starCount: " + starCount)
     }
 
-    private fun gameOver(){
+    private fun gameOver() {
         //score.text = "You lose"
         //vs.text = "Yoooo"
 
@@ -416,7 +517,7 @@ class MainActivity : AppCompatActivity() {
         //gameOverPopUp()
     }
 
-    private fun gameOverPopUp(){
+    private fun gameOverPopUp() {
         //val profileActivityIntent = Intent(this, GameHistory::class.java)
         //startActivity(profileActivityIntent)
         //true
@@ -424,6 +525,9 @@ class MainActivity : AppCompatActivity() {
         ivStar1hidden.visibility = View.VISIBLE
         ivStar2hidden.visibility = View.VISIBLE
         ivStar3hidden.visibility = View.VISIBLE
+        btnRetry.visibility = View.VISIBLE
+        btnLevelSelect.visibility = View.VISIBLE
+        btnTitleScreen.visibility = View.VISIBLE
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

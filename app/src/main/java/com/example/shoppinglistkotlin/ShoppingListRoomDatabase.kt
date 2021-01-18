@@ -12,7 +12,7 @@ import androidx.room.TypeConverters
 
         abstract fun productDao(): ProductDao
 
-        companion object {
+    companion object {
             private const val DATABASE_NAME = "SHOPPING_LIST_DATABASE"
 
             @Volatile

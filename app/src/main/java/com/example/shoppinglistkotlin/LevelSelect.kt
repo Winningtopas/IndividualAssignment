@@ -20,6 +20,9 @@ class LevelSelect : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
         initViews()
+
+        println();
+
     }
 
     private fun initViews() {
@@ -29,14 +32,19 @@ class LevelSelect : AppCompatActivity() {
     }
 
     private fun onLevel1Click(){
+        finish()
         startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun onLevel2Click(){
+//        finish()
+        //startActivityForResult(Intent, int)
         startActivity(Intent(this, MainActivity::class.java))
     }
 
     private fun onLevel3Click(){
+        //(activity as MainActivity).stop()
+        finish()
         startActivity(Intent(this, MainActivity::class.java))
     }
 
