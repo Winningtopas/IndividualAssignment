@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     //var randomStart: Int = (0..2).random()
     private val computerOptions: Array<String> =
-        arrayOf("0", "1", "2", "3", "4", "5") // was eerst 0 - 2
+        arrayOf("0","1","2","3","4","5")
     private val computerCombination: ArrayList<String> = arrayListOf()//computerOptions[randomStart]
 
     val playerCombination: ArrayList<String> = arrayListOf()
@@ -54,7 +54,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tssSound: MediaPlayer
     private lateinit var tssSound2: MediaPlayer
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -68,6 +67,13 @@ class MainActivity : AppCompatActivity() {
         //sound
 
         mp = MediaPlayer.create(this, R.raw.testsound)
+
+        drumSound = MediaPlayer.create(this, R.raw.drum)
+        drumSound2 = MediaPlayer.create(this, R.raw.drum2)
+        drumSmallSound = MediaPlayer.create(this, R.raw.drum_small)
+        drumSmallSound2 = MediaPlayer.create(this, R.raw.drum_small2)
+        tssSound = MediaPlayer.create(this, R.raw.tss_left)
+        tssSound2 = MediaPlayer.create(this, R.raw.tss_right)
 
         //hide hidden objects
         hiddenTest.visibility = View.GONE
@@ -91,8 +97,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        //btnRock.setOnClickListener { onRockClick() }
-
         btnBigDrumLeft.setOnClickListener { playerInput("0") }
         btnBigDrumRight.setOnClickListener { playerInput("1") }
         btnSmallDrumLeft.setOnClickListener { playerInput("2") }
@@ -103,10 +107,6 @@ class MainActivity : AppCompatActivity() {
         btnRetry.setOnClickListener { onRetry() }
         btnLevelSelect.setOnClickListener { onLevelSelect() }
         btnTitleScreen.setOnClickListener { onTitleScreen() }
-
-
-        //btnPaper.setOnClickListener { onPaperClick() }
-        //btnScissors.setOnClickListener { onScissorsClick() }
     }
 
     override fun onBackPressed() {
@@ -218,13 +218,15 @@ class MainActivity : AppCompatActivity() {
 
         var random: Int = (0..5).random()
         computerCombination.add(computerOptions[random])
-
+/*
         drumSound = MediaPlayer.create(this, R.raw.drum)
         drumSound2 = MediaPlayer.create(this, R.raw.drum2)
         drumSmallSound = MediaPlayer.create(this, R.raw.drum_small)
         drumSmallSound2 = MediaPlayer.create(this, R.raw.drum_small2)
         tssSound = MediaPlayer.create(this, R.raw.tss_left)
         tssSound2 = MediaPlayer.create(this, R.raw.tss_right)
+        */
+
 
         GlobalScope.launch {
             var i = 1
@@ -236,7 +238,7 @@ class MainActivity : AppCompatActivity() {
                 if (currentSpeed <= 400f)
                     currentSpeed -= speed
                 delay(currentSpeed.toLong())
-                stopSound()
+                //stopSound()
 
                 println("combinatie: " + combination)
                 if (combination == "0") {
@@ -302,6 +304,8 @@ class MainActivity : AppCompatActivity() {
                 i++
 
             }
+
+            //Place a tiny delay here
             cantInput = false
 
         }
