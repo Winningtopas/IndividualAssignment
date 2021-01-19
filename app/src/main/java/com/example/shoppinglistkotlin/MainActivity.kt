@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     var cantInput: Boolean = true
 
-    var speed: Float = 75f
+    var speed: Float = 50f
     var wrongAnswers: Int = 0
     var correctAnswers: Int = 0
 
@@ -163,6 +163,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun clearAnimation(combination: Int){
+        val buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
+
+        for(i in 0..5){
+            if(i != combination) {
+                buttons[i].clearAnimation()
+                println(buttons[i])
+            }
+        }
+/*
+        btnBigDrumRight.clearAnimation()
+        btnSmallDrumLeft.clearAnimation()
+        btnSmallDrumRight.clearAnimation()
+        btnTssLeft.clearAnimation()
+        btnTssRight.clearAnimation()*/
+    }
+
     private fun showCombinationAnimation() {
         val buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
 
@@ -176,75 +193,33 @@ class MainActivity : AppCompatActivity() {
             var currentSpeed = 1000f
             cantInput = true
 
-
             for (combination in computerCombination) {
-                if (currentSpeed <= 400f)
+                //speed up the game
+                if (currentSpeed >= 800f)
                     currentSpeed -= speed
                 delay(currentSpeed.toLong())
-                //stopSound()
 
                 println("combinatie: " + combination)
+
+                buttons[combination].startAnimation((bounceAnimation))
+                clearAnimation(combination)
                 if (combination == 0) {
-                   // buttons[combination].startAnimation((bounceAnimation))
-
-                    btnBigDrumLeft.startAnimation(bounceAnimation)
-                    btnBigDrumRight.clearAnimation()
-                    btnSmallDrumLeft.clearAnimation()
-                    btnSmallDrumRight.clearAnimation()
-                    btnTssLeft.clearAnimation()
-                    btnTssRight.clearAnimation()
                     drumSound.start()
-
                 }
                 if (combination == 1) {
-                    btnBigDrumRight.startAnimation(bounceAnimation)
-                    btnBigDrumLeft.clearAnimation()
-                    btnSmallDrumLeft.clearAnimation()
-                    btnSmallDrumRight.clearAnimation()
-                    btnTssLeft.clearAnimation()
-                    btnTssRight.clearAnimation()
                     drumSound2.start()
-
                 }
                 if (combination == 2) {
-                    btnSmallDrumLeft.startAnimation(bounceAnimation)
-                    btnBigDrumLeft.clearAnimation()
-                    btnBigDrumRight.clearAnimation()
-                    btnSmallDrumRight.clearAnimation()
-                    btnTssLeft.clearAnimation()
-                    btnTssRight.clearAnimation()
                     drumSmallSound.start()
-
                 }
-
                 if (combination == 3) {
-                    btnSmallDrumRight.startAnimation(bounceAnimation)
-                    btnBigDrumLeft.clearAnimation()
-                    btnBigDrumRight.clearAnimation()
-                    btnSmallDrumLeft.clearAnimation()
-                    btnTssLeft.clearAnimation()
-                    btnTssRight.clearAnimation()
                     drumSmallSound2.start()
-
                 }
                 if (combination == 4) {
-                    btnTssLeft.startAnimation(bounceAnimation)
-                    btnBigDrumLeft.clearAnimation()
-                    btnBigDrumRight.clearAnimation()
-                    btnSmallDrumLeft.clearAnimation()
-                    btnSmallDrumRight.clearAnimation()
-                    btnTssRight.clearAnimation()
                     tssSound.start()
                 }
                 if (combination == 5) {
-                    btnTssRight.startAnimation(bounceAnimation)
-                    btnBigDrumLeft.clearAnimation()
-                    btnBigDrumRight.clearAnimation()
-                    btnSmallDrumLeft.clearAnimation()
-                    btnSmallDrumRight.clearAnimation()
-                    btnTssLeft.clearAnimation()
                     tssSound2.start()
-
                 }
                 i++
 
@@ -255,74 +230,6 @@ class MainActivity : AppCompatActivity() {
 
         }
     }
-
-    private fun stopSound() {
-        println("stopSound isPlaying")
-
-        if (drumSound.isPlaying) {
-            println("drumSound isPlaying")
-            drumSound.reset()
-            drumSound.seekTo(0)
-            drumSound.stop()
-        }
-
-        if (drumSound2.isPlaying){
-            println("drumSound2 isPlaying")
-            drumSound2.reset()
-            drumSound2.seekTo(0)
-            drumSound2.stop()
-        }
-
-        if (drumSmallSound.isPlaying){
-            println("drumSmallSound isPlaying")
-            drumSmallSound.reset()
-            drumSmallSound.seekTo(0)
-            drumSmallSound.stop()
-        }
-
-        if (drumSmallSound2.isPlaying){
-            println("drumSmallSound2 message")
-            drumSmallSound2.reset()
-            drumSmallSound2.seekTo(0)
-            drumSmallSound2.stop()
-        }
-
-        if (tssSound.isPlaying){
-            println("tssSound isPlaying")
-            tssSound.reset()
-            tssSound.seekTo(0)
-            tssSound.stop()
-        }
-
-        if (tssSound2.isPlaying){
-            println("tssSound2 isPlaying")
-            tssSound2.reset()
-            tssSound2.seekTo(0)
-            tssSound2.stop()
-        }
-    }
-
-
-//    private fun stopSound(){
-//        if(drumSound.isPlaying)
-//            drumSound.stop()
-//
-//        if(drumSound2.isPlaying)
-//            drumSound2.stop()
-//
-//        if(drumSmallSound.isPlaying)
-//            drumSmallSound.stop()
-//
-//        if(drumSmallSound2.isPlaying)
-//            drumSmallSound2.stop()
-//
-//        if(tssSound.isPlaying)
-//            tssSound.stop()
-//
-//        if(tssSound2.isPlaying)
-//            tssSound2.stop()
-//    }
-
 
     private fun playerInput(playerInputVariable: Int) {
 
@@ -358,31 +265,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-//            if (playerInputVariable == "0"){
-//                drumSound.start()
-//                btnBigDrumLeft.startAnimation(bounceAnimation)
-//            }
-//            if (playerInputVariable == "1"){
-//                drumSound2.start()
-//                btnBigDrumRight.startAnimation(bounceAnimation)
-//            }
-//            if (playerInputVariable == "2"){
-//                drumSmallSound.start()
-//                btnSmallDrumLeft.startAnimation(bounceAnimation)
-//            }
-//            if (playerInputVariable == "3"){
-//                drumSmallSound2.start()
-//                btnSmallDrumRight.startAnimation(bounceAnimation)
-//            }
-//            if (playerInputVariable == "4"){
-//                tssSound.start()
-//                btnTssLeft.startAnimation(bounceAnimation)
-//            }
-//            if (playerInputVariable == "5"){
-//                tssSound2.start()
-//                btnTssRight.startAnimation(bounceAnimation)
-//            }
-
             numberOfPlayerInputs++
 
             playerCombination.add(playerInputVariable)
@@ -411,14 +293,13 @@ class MainActivity : AppCompatActivity() {
                         3 -> cross2.setImageResource(R.drawable.rock)
                     }
                 }
-
                 showCombination()
             }
         }
     }
 
     fun starCalculations() {
-        if (points >= 30) {//30
+        if (points >= 30) {
             starCount = 1
             if (points >= 50) {
                 starCount = 2
@@ -447,7 +328,7 @@ class MainActivity : AppCompatActivity() {
                 ivStar2hidden.setImageResource(R.drawable.star)
                 ivStar3hidden.setImageResource(R.drawable.star)
             }
-            else -> { // Note the block
+            else -> {
                 print("starCount is wrong")
             }
         }
