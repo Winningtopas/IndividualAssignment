@@ -29,11 +29,11 @@ class MainActivity : AppCompatActivity() {
     private var scoreInt: Int = 0
 
     //var randomStart: Int = (0..2).random()
-    private val computerOptions: Array<String> =
-        arrayOf("0","1","2","3","4","5")
-    private val computerCombination: ArrayList<String> = arrayListOf()//computerOptions[randomStart]
+    private val computerOptions: Array<Int> =
+        arrayOf(0,1,2,3,4,5)
+    private val computerCombination: ArrayList<Int> = arrayListOf()//computerOptions[randomStart]
 
-    val playerCombination: ArrayList<String> = arrayListOf()
+    val playerCombination: ArrayList<Int> = arrayListOf()
 
     var numberOfPlayerInputs: Int = 0
 
@@ -97,12 +97,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViews() {
-        btnBigDrumLeft.setOnClickListener { playerInput("0") }
-        btnBigDrumRight.setOnClickListener { playerInput("1") }
-        btnSmallDrumLeft.setOnClickListener { playerInput("2") }
-        btnSmallDrumRight.setOnClickListener { playerInput("3") }
-        btnTssLeft.setOnClickListener { playerInput("4") }
-        btnTssRight.setOnClickListener { playerInput("5") }
+        btnBigDrumLeft.setOnClickListener { playerInput(0) }
+        btnBigDrumRight.setOnClickListener { playerInput(1) }
+        btnSmallDrumLeft.setOnClickListener { playerInput(2) }
+        btnSmallDrumRight.setOnClickListener { playerInput(3) }
+        btnTssLeft.setOnClickListener { playerInput(4) }
+        btnTssRight.setOnClickListener { playerInput(5) }
 
         btnRetry.setOnClickListener { onRetry() }
         btnLevelSelect.setOnClickListener { onLevelSelect() }
@@ -147,54 +147,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun computer() {
-        computerHandInt = (1..3).random()
-
-        cHand = when (computerHandInt) {
-            1 -> "rock"
-            2 -> "paper"
-            else -> "scissors"
-        }
-
-        playerHandInt = when (hand) {
-            "rock" -> 1
-            "paper" -> 2
-            else -> 3
-        }
-
-        var playerResourceID: Int
-        var computerResourceID: Int
-
-        playerResourceID = when (hand) {
-            "rock" -> R.drawable.rock
-            "paper" -> R.drawable.paper
-            else -> R.drawable.scissors
-        }
-
-        computerResourceID = when (cHand) {
-            "rock" -> R.drawable.rock
-            "paper" -> R.drawable.paper
-            else -> R.drawable.scissors
-        }
-
-        if (cHand == hand) {
-            scoreInt++
-//            score.text = scoreInt.toString()
-//        } else {
-//            score.text = " "
-        }
-/*
-        if(cHand == hand)
-            winlose.text = "Draw"
-        if(cHand == "rock" && hand == "paper" || cHand == "paper" && hand == "scissors" || cHand == "scissors" && hand == "rock")
-            winlose.text = "You win!"
-        if(hand == "rock" && cHand == "paper" || hand == "paper" && cHand == "scissors" || hand == "scissors" && cHand == "rock")
-            winlose.text = "Computer wins!"
-
- */
-
-    }
-
     private fun showCombination() {
         if (wrongAnswers >= 3)
             gameOver()
@@ -212,21 +164,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCombinationAnimation() {
-
+        val buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
 
         val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
 
         var random: Int = (0..5).random()
         computerCombination.add(computerOptions[random])
-/*
-        drumSound = MediaPlayer.create(this, R.raw.drum)
-        drumSound2 = MediaPlayer.create(this, R.raw.drum2)
-        drumSmallSound = MediaPlayer.create(this, R.raw.drum_small)
-        drumSmallSound2 = MediaPlayer.create(this, R.raw.drum_small2)
-        tssSound = MediaPlayer.create(this, R.raw.tss_left)
-        tssSound2 = MediaPlayer.create(this, R.raw.tss_right)
-        */
-
 
         GlobalScope.launch {
             var i = 1
@@ -241,7 +184,9 @@ class MainActivity : AppCompatActivity() {
                 //stopSound()
 
                 println("combinatie: " + combination)
-                if (combination == "0") {
+                if (combination == 0) {
+                   // buttons[combination].startAnimation((bounceAnimation))
+
                     btnBigDrumLeft.startAnimation(bounceAnimation)
                     btnBigDrumRight.clearAnimation()
                     btnSmallDrumLeft.clearAnimation()
@@ -251,7 +196,7 @@ class MainActivity : AppCompatActivity() {
                     drumSound.start()
 
                 }
-                if (combination == "1") {
+                if (combination == 1) {
                     btnBigDrumRight.startAnimation(bounceAnimation)
                     btnBigDrumLeft.clearAnimation()
                     btnSmallDrumLeft.clearAnimation()
@@ -261,7 +206,7 @@ class MainActivity : AppCompatActivity() {
                     drumSound2.start()
 
                 }
-                if (combination == "2") {
+                if (combination == 2) {
                     btnSmallDrumLeft.startAnimation(bounceAnimation)
                     btnBigDrumLeft.clearAnimation()
                     btnBigDrumRight.clearAnimation()
@@ -272,7 +217,7 @@ class MainActivity : AppCompatActivity() {
 
                 }
 
-                if (combination == "3") {
+                if (combination == 3) {
                     btnSmallDrumRight.startAnimation(bounceAnimation)
                     btnBigDrumLeft.clearAnimation()
                     btnBigDrumRight.clearAnimation()
@@ -282,7 +227,7 @@ class MainActivity : AppCompatActivity() {
                     drumSmallSound2.start()
 
                 }
-                if (combination == "4") {
+                if (combination == 4) {
                     btnTssLeft.startAnimation(bounceAnimation)
                     btnBigDrumLeft.clearAnimation()
                     btnBigDrumRight.clearAnimation()
@@ -291,7 +236,7 @@ class MainActivity : AppCompatActivity() {
                     btnTssRight.clearAnimation()
                     tssSound.start()
                 }
-                if (combination == "5") {
+                if (combination == 5) {
                     btnTssRight.startAnimation(bounceAnimation)
                     btnBigDrumLeft.clearAnimation()
                     btnBigDrumRight.clearAnimation()
@@ -379,7 +324,7 @@ class MainActivity : AppCompatActivity() {
 //    }
 
 
-    private fun playerInput(playerInputVariable: String) {
+    private fun playerInput(playerInputVariable: Int) {
 
         val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
 
@@ -387,27 +332,27 @@ class MainActivity : AppCompatActivity() {
             println("cant input text: " + cantInput)
 
             when (playerInputVariable) {
-                "0" -> {
+                0 -> {
                     drumSound.start()
                     btnBigDrumLeft.startAnimation(bounceAnimation)
                 }
-                "1" -> {
+                1 -> {
                     drumSound2.start()
                     btnBigDrumRight.startAnimation(bounceAnimation)
                 }
-                "2" -> {
+                2 -> {
                     drumSmallSound.start()
                     btnSmallDrumLeft.startAnimation(bounceAnimation)
                 }
-                "3" -> {
+                3 -> {
                     drumSmallSound2.start()
                     btnSmallDrumRight.startAnimation(bounceAnimation)
                 }
-                "4" -> {
+                4 -> {
                     tssSound.start()
                     btnTssLeft.startAnimation(bounceAnimation)
                 }
-                "5" -> {
+                5 -> {
                     tssSound2.start()
                     btnTssRight.startAnimation(bounceAnimation)
                 }
