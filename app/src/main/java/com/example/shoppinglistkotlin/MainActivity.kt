@@ -8,6 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.*
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tssSound2: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -62,6 +64,11 @@ class MainActivity : AppCompatActivity() {
         //deleteGameList()
 
         gameHistoryRepository = GameHistoryRepository(this)
+
+
+        val currentLevel = getIntent().getIntExtra("level", 1);
+        println("Level: " + currentLevel)
+        levelDifferences(currentLevel)
         initViews()
 
         //sound
@@ -87,8 +94,25 @@ class MainActivity : AppCompatActivity() {
 
         showCombination()
 
-        val currentLevel = getIntent().getIntExtra("level", 1);
-        println("Level: " + currentLevel)
+
+    }
+
+    private fun levelDifferences(currentLevel: Int){
+
+        when (currentLevel) {
+
+            1 -> {
+                backgroundMainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.background))
+            }
+            2 -> {
+                backgroundMainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.background2))
+            }
+            3 -> {
+                backgroundMainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.background3))
+            }
+        }
+
+
     }
 
     private fun deleteGameList() {

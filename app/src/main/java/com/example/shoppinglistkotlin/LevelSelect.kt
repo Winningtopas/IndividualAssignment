@@ -34,6 +34,7 @@ class LevelSelect : AppCompatActivity() {
 /*        finish()
         startActivity(Intent(this, MainActivity::class.java))*/
 
+        finish()
         val result = Intent(this, MainActivity::class.java)
         result.putExtra("level", 1)
         startActivity(result)
@@ -42,6 +43,7 @@ class LevelSelect : AppCompatActivity() {
     private fun onLevel2Click(){
 //        finish()
         //startActivityForResult(Intent, int)
+        finish()
         val result = Intent(this, MainActivity::class.java)
         result.putExtra("level", 2)
         startActivity(result)
@@ -49,6 +51,7 @@ class LevelSelect : AppCompatActivity() {
 
     private fun onLevel3Click(){
         //(activity as MainActivity).stop()
+        finish()
         val result = Intent(this, MainActivity::class.java)
         result.putExtra("level", 3)
         startActivity(result)
