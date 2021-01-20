@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private var scoreInt: Int = 0
 
     //var randomStart: Int = (0..2).random()
-    private val computerOptions: Array<Int> =
+    private var computerOptions: Array<Int> =
         arrayOf(0,1,2,3,4,5)
     private val computerCombination: ArrayList<Int> = arrayListOf()//computerOptions[randomStart]
 
@@ -55,6 +55,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tssSound: MediaPlayer
     private lateinit var tssSound2: MediaPlayer
 
+    private var currentLevel: Int = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -66,9 +68,9 @@ class MainActivity : AppCompatActivity() {
         gameHistoryRepository = GameHistoryRepository(this)
 
 
-        val currentLevel = getIntent().getIntExtra("level", 1);
+        currentLevel = getIntent().getIntExtra("level", 1);
         println("Level: " + currentLevel)
-        levelDifferences(currentLevel)
+        levelDifferences()
         initViews()
 
         //sound
@@ -97,22 +99,48 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun levelDifferences(currentLevel: Int){
+    private fun makeButtonsVisible(){
+        btnBigDrumLeft.visibility = View.VISIBLE
+        btnBigDrumRight.visibility = View.VISIBLE
+        if(currentLevel > 1){
+            btnSmallDrumLeft.visibility = View.VISIBLE
+            btnSmallDrumRight.visibility = View.VISIBLE
+        }
+        if(currentLevel > 2) {
+            btnTssLeft.visibility = View.VISIBLE
+            btnTssRight.visibility = View.VISIBLE
+        }
+    }
 
+    private fun makeButtonsInvisible(){
+        btnBigDrumLeft.visibility = View.INVISIBLE
+        btnBigDrumRight.visibility = View.INVISIBLE
+        btnSmallDrumLeft.visibility = View.INVISIBLE
+        btnSmallDrumRight.visibility = View.INVISIBLE
+        btnTssLeft.visibility = View.INVISIBLE
+        btnTssRight.visibility = View.INVISIBLE
+    }
+
+    private fun levelDifferences(){
+
+        makeButtonsInvisible()
         when (currentLevel) {
-
             1 -> {
                 backgroundMainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.background))
+                computerOptions = arrayOf(0,1)
+                makeButtonsVisible()
             }
             2 -> {
                 backgroundMainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.background2))
+                computerOptions = arrayOf(0,1,2,3)
+                makeButtonsVisible()
             }
             3 -> {
                 backgroundMainActivity.setBackground(ContextCompat.getDrawable(this, R.drawable.background3))
+                computerOptions = arrayOf(0,1,2,3,4,5)
+                makeButtonsVisible()
             }
         }
-
-
     }
 
     private fun deleteGameList() {
@@ -196,9 +224,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun clearAnimation(combination: Int){
-        val buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
+        val max =  computerOptions.size - 1
+        println("max: " + max )
 
-        for(i in 0..5){
+        var buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight)
+        if(max > 2){
+            buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight)
+            if(max > 4){
+                buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
+            }
+        }
+
+
+        for(i in 0..max){
             if(i != combination) {
 
                 //use this so it works on emulators (fixes the async)
@@ -218,11 +256,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showCombinationAnimation() {
-        val buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
+        val max =  computerOptions.size - 1
+        println("max: " + max )
+
+        var buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight)
+        if(max > 2){
+            buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight)
+            if(max > 4){
+                buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
+            }
+        }
 
         val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
 
-        var random: Int = (0..5).random()
+        var random: Int = (0..max).random()
         computerCombination.add(computerOptions[random])
 
         GlobalScope.launch {
