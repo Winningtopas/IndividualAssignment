@@ -168,7 +168,12 @@ class MainActivity : AppCompatActivity() {
 
         for(i in 0..5){
             if(i != combination) {
-                buttons[i].clearAnimation()
+
+                //use this so it works on emulators (fixes the async)
+                this@MainActivity.runOnUiThread(java.lang.Runnable {
+                    buttons[i].clearAnimation()
+                })
+
                 println(buttons[i])
             }
         }
@@ -201,7 +206,11 @@ class MainActivity : AppCompatActivity() {
 
                 println("combinatie: " + combination)
 
-                buttons[combination].startAnimation((bounceAnimation))
+                //use this so it works on emulators (fixes the async)
+                this@MainActivity.runOnUiThread(java.lang.Runnable {
+                    buttons[combination].startAnimation((bounceAnimation))
+                })
+
                 clearAnimation(combination)
                 if (combination == 0) {
                     drumSound.start()
