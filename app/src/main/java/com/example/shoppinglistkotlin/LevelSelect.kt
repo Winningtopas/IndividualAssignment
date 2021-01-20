@@ -2,9 +2,8 @@ package com.example.shoppinglistkotlin
 
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_level_select.*
 import kotlinx.android.synthetic.main.content_level_select.*
 
@@ -32,20 +31,27 @@ class LevelSelect : AppCompatActivity() {
     }
 
     private fun onLevel1Click(){
-        finish()
-        startActivity(Intent(this, MainActivity::class.java))
+/*        finish()
+        startActivity(Intent(this, MainActivity::class.java))*/
+
+        val result = Intent(this, MainActivity::class.java)
+        result.putExtra("level", 1)
+        startActivity(result)
     }
 
     private fun onLevel2Click(){
 //        finish()
         //startActivityForResult(Intent, int)
-        startActivity(Intent(this, MainActivity::class.java))
+        val result = Intent(this, MainActivity::class.java)
+        result.putExtra("level", 2)
+        startActivity(result)
     }
 
     private fun onLevel3Click(){
         //(activity as MainActivity).stop()
-        finish()
-        startActivity(Intent(this, MainActivity::class.java))
+        val result = Intent(this, MainActivity::class.java)
+        result.putExtra("level", 3)
+        startActivity(result)
     }
 
 }

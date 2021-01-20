@@ -86,6 +86,9 @@ class MainActivity : AppCompatActivity() {
         btnTitleScreen.visibility = View.GONE
 
         showCombination()
+
+        val currentLevel = getIntent().getIntExtra("level", 1);
+        println("Level: " + currentLevel)
     }
 
     private fun deleteGameList() {
@@ -139,6 +142,11 @@ class MainActivity : AppCompatActivity() {
                 //winner = winlose.text.toString(),
                 date = currentTime,
                 stars = starCount
+            )
+
+            val playerStats = SaveData(
+                currency = starCount,
+                unlockedLevel = playerHandIndex
             )
 
             withContext(Dispatchers.IO) {

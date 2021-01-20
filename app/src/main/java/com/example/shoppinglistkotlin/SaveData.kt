@@ -18,7 +18,7 @@ data class SaveData(
     @ColumnInfo(name = "currency")
     var currency: Int,
 
-    @ColumnInfo(name = "playerHand")
+    @ColumnInfo(name = "unlockedLevel")
     var unlockedLevel: Int
 
 ) : Parcelable
