@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".GameHistory"
+            android:name=".GameHistoryScreen"
             android:label="@string/title_activity_game_history"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity

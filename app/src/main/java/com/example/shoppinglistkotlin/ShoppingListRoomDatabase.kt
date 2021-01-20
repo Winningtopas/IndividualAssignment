@@ -6,11 +6,11 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Product::class], version = 1, exportSchema = false)
+@Database(entities = [GameHistoryStats::class], version = 1, exportSchema = false)
     @TypeConverters(Converters::class)
     abstract class ShoppingListRoomDatabase : RoomDatabase() {
 
-        abstract fun productDao(): ProductDao
+        abstract fun productDao(): GameHistoryDao
 
     companion object {
             private const val DATABASE_NAME = "SHOPPING_LIST_DATABASE"

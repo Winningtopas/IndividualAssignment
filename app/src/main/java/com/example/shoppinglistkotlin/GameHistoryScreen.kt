@@ -1,10 +1,8 @@
 package com.example.shoppinglistkotlin
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,11 +17,11 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class GameHistory : AppCompatActivity() {
+class GameHistoryScreen : AppCompatActivity() {
 
-    private val products = arrayListOf<Product>()
-    private lateinit var productRepository: ProductRepository
-    private val productAdapter = ProductAdapter(products)
+    private val products = arrayListOf<GameHistoryStats>()
+    private lateinit var gameHistoryRepository: GameHistoryRepository
+    private val productAdapter = GameHistoryAdapter(products)
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,7 +29,7 @@ class GameHistory : AppCompatActivity() {
         setContentView(R.layout.activity_game_history)
         setSupportActionBar(toolbar)
 
-        productRepository = ProductRepository(this)
+        gameHistoryRepository = GameHistoryRepository(this)
         initViews()
     }
 
@@ -39,7 +37,7 @@ class GameHistory : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.title = "Your Game History"
 
-        val product = intent.getParcelableExtra<Product>(PRODUCT_EXTRA)
+        val product = intent.getParcelableExtra<GameHistoryStats>(PRODUCT_EXTRA)
 
         if (product != null) {
             //hier moet de list
@@ -58,7 +56,7 @@ class GameHistory : AppCompatActivity() {
     private fun getShoppingListFromDatabase() {
         mainScope.launch {
             val shoppingList = withContext(Dispatchers.IO) {
-                productRepository.getAllProducts()
+                gameHistoryRepository.getAllProducts()
             }
             products.clear()
             products.addAll(shoppingList)
@@ -89,7 +87,7 @@ class GameHistory : AppCompatActivity() {
     private fun deleteShoppingList() {
         mainScope.launch {
             withContext(Dispatchers.IO) {
-                productRepository.deleteAllProducts()
+                gameHistoryRepository.deleteAllProducts()
             }
             getShoppingListFromDatabase()
         }

@@ -9,7 +9,7 @@ import java.util.*
 
 @Parcelize
 @Entity(tableName = "product_table")
-data class Product(
+data class GameHistoryStats(
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

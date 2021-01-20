@@ -15,10 +15,10 @@ import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val products = arrayListOf<Product>()
-    private val productAdapter = ProductAdapter(products)
+    private val products = arrayListOf<GameHistoryStats>()
+    private val productAdapter = GameHistoryAdapter(products)
 
-    private lateinit var productRepository: ProductRepository
+    private lateinit var gameHistoryRepository: GameHistoryRepository
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
     private var hand: String = "paper"
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
 
         //deleteGameList()
 
-        productRepository = ProductRepository(this)
+        gameHistoryRepository = GameHistoryRepository(this)
         initViews()
 
         //sound
@@ -91,7 +91,7 @@ class MainActivity : AppCompatActivity() {
     private fun deleteGameList() {
         mainScope.launch {
             withContext(Dispatchers.IO) {
-                productRepository.deleteAllProducts()
+                gameHistoryRepository.deleteAllProducts()
             }
         }
     }
@@ -132,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         //private fun addProduct(points: Int) {
         mainScope.launch {
             val currentTime = Calendar.getInstance().time
-            val product = Product(
+            val product = GameHistoryStats(
 
                 computerHand = points,
                 playerHand = playerHandIndex,
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity() {
             )
 
             withContext(Dispatchers.IO) {
-                productRepository.insertProduct(product)
+                gameHistoryRepository.insertProduct(product)
             }
         }
     }
@@ -357,7 +357,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun gameOverPopUp() {
-        //val profileActivityIntent = Intent(this, GameHistory::class.java)
+        //val profileActivityIntent = Intent(this, GameHistoryScreen::class.java)
         //startActivity(profileActivityIntent)
         //true
         hiddenTest.visibility = View.VISIBLE
@@ -381,7 +381,7 @@ class MainActivity : AppCompatActivity() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.history_fab -> {
-                val profileActivityIntent = Intent(this, GameHistory::class.java)
+                val profileActivityIntent = Intent(this, GameHistoryScreen::class.java)
                 startActivity(profileActivityIntent)
                 true
             }

@@ -6,16 +6,16 @@ import androidx.room.Insert
 import androidx.room.Query
 
     @Dao
-    interface ProductDao {
+    interface GameHistoryDao {
 
         @Query("SELECT * FROM product_table")
-        suspend fun getAllProducts(): List<Product>
+        suspend fun getAllProducts(): List<GameHistoryStats>
 
         @Insert
-        suspend fun insertProduct(product: Product)
+        suspend fun insertProduct(gameHistoryStats: GameHistoryStats)
 
         @Delete
-        suspend fun deleteProduct(product: Product)
+        suspend fun deleteProduct(gameHistoryStats: GameHistoryStats)
 
         @Query("DELETE FROM product_table")
         suspend fun deleteAllProducts()

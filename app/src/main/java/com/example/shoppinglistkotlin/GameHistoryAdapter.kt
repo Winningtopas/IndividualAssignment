@@ -4,11 +4,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.content_main.*
-import kotlinx.android.synthetic.main.content_main.view.*
 import kotlinx.android.synthetic.main.item_layout.view.*
 
-class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
+class GameHistoryAdapter(private val gameHistoryStatistics: List<GameHistoryStats>) : RecyclerView.Adapter<GameHistoryAdapter.ViewHolder>() {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -16,19 +14,19 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
         )
     }
 
-    override fun getItemCount(): Int = products.size
+    override fun getItemCount(): Int = gameHistoryStatistics.size
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(products[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) = holder.bind(gameHistoryStatistics[position])
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        fun bind(product: Product) {
-            //itemView.ivHistoryComputerHand.setImageResource(product.computerHand)
-            //itemView.ivHistoryPlayerHand.setImageResource(product.playerHand)
-            itemView.tvHistoryWinLose.text = "Score: " + product.computerHand.toString()
-            itemView.tvHistoryDate.text = product.date.toString()
+        fun bind(gameHistoryStats: GameHistoryStats) {
+            //itemView.ivHistoryComputerHand.setImageResource(gameHistoryStats.computerHand)
+            //itemView.ivHistoryPlayerHand.setImageResource(gameHistoryStats.playerHand)
+            itemView.tvHistoryWinLose.text = "Score: " + gameHistoryStats.computerHand.toString()
+            itemView.tvHistoryDate.text = gameHistoryStats.date.toString()
 
-            when (product.stars) {
+            when (gameHistoryStats.stars) {
                 1 -> itemView.ivStar1gold.setImageResource(R.drawable.star)
                 2 -> {
                     itemView.ivStar1gold.setImageResource(R.drawable.star)
@@ -44,8 +42,8 @@ class ProductAdapter(private val products: List<Product>) : RecyclerView.Adapter
                 }
             }
 
-           // itemView.tvProduct.text = product.name
-           // itemView.tvQuantity.text = product.quantity.toString()
+           // itemView.tvProduct.text = gameHistoryStats.name
+           // itemView.tvQuantity.text = gameHistoryStats.quantity.toString()
         }
     }
 }
