@@ -15,14 +15,11 @@ data class GameHistoryStats(
     @ColumnInfo(name = "id")
     var id: Long? = null,
 
-    @ColumnInfo(name = "computerHand")
-    var computerHand: Int,
+    @ColumnInfo(name = "level")
+    var level: Int,
 
-    @ColumnInfo(name = "playerHand")
-    var playerHand: Int,
-
-//    @ColumnInfo(name = "winner")
-//    var winner: String,
+    @ColumnInfo(name = "points")
+    var points: Int,
 
     @ColumnInfo(name = "date")
     var date: Date,

@@ -20,5 +20,4 @@ class GameHistoryRepository(context: Context) {
     suspend fun deleteProduct(gameHistoryStats: GameHistoryStats) = gameHistoryDao.deleteProduct(gameHistoryStats)
 
     suspend fun deleteAllProducts() = gameHistoryDao.deleteAllProducts()
-
 }

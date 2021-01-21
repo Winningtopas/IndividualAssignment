@@ -43,7 +43,6 @@ class GameHistoryScreen : AppCompatActivity() {
             //hier moet de list
         }
 
-
         rvGameList.layoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
         rvGameList.adapter = productAdapter
         rvGameList.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))

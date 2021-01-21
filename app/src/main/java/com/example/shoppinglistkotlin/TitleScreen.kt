@@ -21,10 +21,10 @@ class TitleScreen : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.title = "Rhytm Game"
 
-        fab.setOnClickListener { view ->
+/*        fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
-        }
+        }*/
         initViews()
         mp = MediaPlayer.create(this, R.raw.titlemusic)
         mp.isLooping = true

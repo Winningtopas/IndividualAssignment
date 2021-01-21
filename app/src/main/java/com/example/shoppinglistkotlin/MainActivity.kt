@@ -9,45 +9,31 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 import kotlinx.coroutines.*
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val products = arrayListOf<GameHistoryStats>()
-    private val productAdapter = GameHistoryAdapter(products)
-
     private lateinit var gameHistoryRepository: GameHistoryRepository
     private val mainScope = CoroutineScope(Dispatchers.Main)
 
-    private var hand: String = "paper"
-    private var cHand: String = "rock"
-
-    private var playerHandInt: Int = 1
-    private var computerHandInt: Int = 1
-    private var scoreInt: Int = 0
-
-    //var randomStart: Int = (0..2).random()
     private var computerOptions: Array<Int> =
         arrayOf(0,1,2,3,4,5)
     private val computerCombination: ArrayList<Int> = arrayListOf()//computerOptions[randomStart]
 
-    val playerCombination: ArrayList<Int> = arrayListOf()
+    private val playerCombination: ArrayList<Int> = arrayListOf()
 
-    var numberOfPlayerInputs: Int = 0
+    private var numberOfPlayerInputs: Int = 0
+    private var cantInput: Boolean = true
 
-    var cantInput: Boolean = true
-
-    var speed: Float = 50f
-    var wrongAnswers: Int = 0
-    var correctAnswers: Int = 0
+    private var speed: Float = 50f
+    private var wrongAnswers: Int = 0
+    private var correctAnswers: Int = 0
 
     var points: Int = 0
     var starCount: Int = 0
 
-    private lateinit var mp: MediaPlayer
     private lateinit var drumSound: MediaPlayer
     private lateinit var drumSound2: MediaPlayer
     private lateinit var drumSmallSound: MediaPlayer
@@ -61,21 +47,13 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //setSupportActionBar(toolbar)
 
         //deleteGameList()
-
         gameHistoryRepository = GameHistoryRepository(this)
 
-
         currentLevel = getIntent().getIntExtra("level", 1);
-        println("Level: " + currentLevel)
         levelDifferences()
         initViews()
-
-        //sound
-
-        mp = MediaPlayer.create(this, R.raw.testsound)
 
         drumSound = MediaPlayer.create(this, R.raw.drum)
         drumSound2 = MediaPlayer.create(this, R.raw.drum2)
@@ -95,8 +73,6 @@ class MainActivity : AppCompatActivity() {
         btnTitleScreen.visibility = View.GONE
 
         showCombination()
-
-
     }
 
     private fun makeButtonsVisible(){
@@ -122,7 +98,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun levelDifferences(){
-
         makeButtonsInvisible()
         when (currentLevel) {
             1 -> {
@@ -164,10 +139,6 @@ class MainActivity : AppCompatActivity() {
         btnTitleScreen.setOnClickListener { onTitleScreen() }
     }
 
-    override fun onBackPressed() {
-
-    }
-
     private fun onRetry() {
         finish()
         startActivity(Intent(this, MainActivity::class.java))
@@ -183,22 +154,15 @@ class MainActivity : AppCompatActivity() {
         startActivity(Intent(this, TitleScreen::class.java))
     }
 
-    private fun addProduct(playerHandIndex: Int, computerHandIndex: Int) {
-        //private fun addProduct(points: Int) {
+    private fun addStats(playerHandIndex: Int) {
         mainScope.launch {
             val currentTime = Calendar.getInstance().time
             val product = GameHistoryStats(
 
-                computerHand = points,
-                playerHand = playerHandIndex,
-                //winner = winlose.text.toString(),
+                level = currentLevel,
+                points = points,
                 date = currentTime,
                 stars = starCount
-            )
-
-            val playerStats = SaveData(
-                currency = starCount,
-                unlockedLevel = playerHandIndex
             )
 
             withContext(Dispatchers.IO) {
@@ -212,14 +176,8 @@ class MainActivity : AppCompatActivity() {
             gameOver()
         else {
             showCombinationAnimation()
-            //winlose.text = computerCombination.toString()
-
-            //vs.text = wrongAnswers.toString()
-
-
             playerCombination.clear()
             numberOfPlayerInputs = 0
-
         }
     }
 
@@ -235,24 +193,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-
         for(i in 0..max){
             if(i != combination) {
-
                 //use this so it works on emulators (fixes the async)
                 this@MainActivity.runOnUiThread(java.lang.Runnable {
                     buttons[i].clearAnimation()
                 })
-
-                println(buttons[i])
             }
         }
-/*
-        btnBigDrumRight.clearAnimation()
-        btnSmallDrumLeft.clearAnimation()
-        btnSmallDrumRight.clearAnimation()
-        btnTssLeft.clearAnimation()
-        btnTssRight.clearAnimation()*/
     }
 
     private fun showCombinationAnimation() {
@@ -266,6 +214,7 @@ class MainActivity : AppCompatActivity() {
                 buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
             }
         }
+        var sounds = arrayOf(drumSound, drumSound2, drumSmallSound, drumSmallSound2, tssSound, tssSound2)
 
         val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
 
@@ -283,34 +232,14 @@ class MainActivity : AppCompatActivity() {
                     currentSpeed -= speed
                 delay(currentSpeed.toLong())
 
-                println("combinatie: " + combination)
-
                 //use this so it works on emulators (fixes the async)
                 this@MainActivity.runOnUiThread(java.lang.Runnable {
                     buttons[combination].startAnimation((bounceAnimation))
+                    sounds[combination].start()
                 })
 
                 clearAnimation(combination)
-                if (combination == 0) {
-                    drumSound.start()
-                }
-                if (combination == 1) {
-                    drumSound2.start()
-                }
-                if (combination == 2) {
-                    drumSmallSound.start()
-                }
-                if (combination == 3) {
-                    drumSmallSound2.start()
-                }
-                if (combination == 4) {
-                    tssSound.start()
-                }
-                if (combination == 5) {
-                    tssSound2.start()
-                }
                 i++
-
             }
 
             //Place a tiny delay here
@@ -322,47 +251,24 @@ class MainActivity : AppCompatActivity() {
     private fun playerInput(playerInputVariable: Int) {
 
         val bounceAnimation = AnimationUtils.loadAnimation(this, R.anim.bounce)
+        var buttons = arrayOf(btnBigDrumLeft, btnBigDrumRight, btnSmallDrumLeft, btnSmallDrumRight, btnTssLeft, btnTssRight)
+        var sounds = arrayOf(drumSound, drumSound2, drumSmallSound, drumSmallSound2, tssSound, tssSound2)
 
         if (!cantInput) {
-            println("cant input text: " + cantInput)
 
-            when (playerInputVariable) {
-                0 -> {
-                    drumSound.start()
-                    btnBigDrumLeft.startAnimation(bounceAnimation)
-                }
-                1 -> {
-                    drumSound2.start()
-                    btnBigDrumRight.startAnimation(bounceAnimation)
-                }
-                2 -> {
-                    drumSmallSound.start()
-                    btnSmallDrumLeft.startAnimation(bounceAnimation)
-                }
-                3 -> {
-                    drumSmallSound2.start()
-                    btnSmallDrumRight.startAnimation(bounceAnimation)
-                }
-                4 -> {
-                    tssSound.start()
-                    btnTssLeft.startAnimation(bounceAnimation)
-                }
-                5 -> {
-                    tssSound2.start()
-                    btnTssRight.startAnimation(bounceAnimation)
-                }
-            }
+            //use this so it works on emulators (fixes the async)
+            this@MainActivity.runOnUiThread(java.lang.Runnable {
+                buttons[playerInputVariable].startAnimation((bounceAnimation))
+                sounds[playerInputVariable].start()
+            })
 
             numberOfPlayerInputs++
 
             playerCombination.add(playerInputVariable)
-            //println(playerCombination + " EN " + computerCombination + "computersize: " + computerCombination.size)
-            //println(computerCombination)
 
             if (numberOfPlayerInputs == computerCombination.size) {
                 if (playerCombination == computerCombination) {
                     correctAnswers++
-                    //score.text = "goed"
 
                     points = correctAnswers * 10
                     if (points != 0) {
@@ -373,8 +279,6 @@ class MainActivity : AppCompatActivity() {
                     starCalculations()
                 } else {
                     wrongAnswers++
-                    //score.text = "fout het was " + computerCombination[computerCombination.lastIndex]
-                    println(playerCombination + " EN !!!! " + computerCombination)
                     when (wrongAnswers) {
                         1 -> cross.setImageResource(R.drawable.rock)
                         2 -> cross1.setImageResource(R.drawable.rock)
@@ -386,7 +290,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun starCalculations() {
+    private fun starCalculations() {
         if (points >= 30) {
             starCount = 1
             if (points >= 50) {
@@ -420,25 +324,15 @@ class MainActivity : AppCompatActivity() {
                 print("starCount is wrong")
             }
         }
-        println("starCount: " + starCount)
     }
 
     private fun gameOver() {
-        //score.text = "You lose"
-        //vs.text = "Yoooo"
-
         var playerResourceID: Int = 1
-        var computerResourceID: Int = 1
-
-        addProduct(playerResourceID, computerResourceID)
+        addStats(playerResourceID)
         gameOverPopUp()
-        //gameOverPopUp()
     }
 
     private fun gameOverPopUp() {
-        //val profileActivityIntent = Intent(this, GameHistoryScreen::class.java)
-        //startActivity(profileActivityIntent)
-        //true
         hiddenTest.visibility = View.VISIBLE
         ivStar1hidden.visibility = View.VISIBLE
         ivStar2hidden.visibility = View.VISIBLE
@@ -452,20 +346,6 @@ class MainActivity : AppCompatActivity() {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        return when (item.itemId) {
-            R.id.history_fab -> {
-                val profileActivityIntent = Intent(this, GameHistoryScreen::class.java)
-                startActivity(profileActivityIntent)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
     }
 
     companion object {

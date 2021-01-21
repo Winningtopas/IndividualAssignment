@@ -8,6 +8,8 @@ import kotlinx.android.synthetic.main.item_layout.view.*
 
 class GameHistoryAdapter(private val gameHistoryStatistics: List<GameHistoryStats>) : RecyclerView.Adapter<GameHistoryAdapter.ViewHolder>() {
 
+    public var highestStarCountLevel1 = 0
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_layout, parent, false)
@@ -21,10 +23,14 @@ class GameHistoryAdapter(private val gameHistoryStatistics: List<GameHistoryStat
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind(gameHistoryStats: GameHistoryStats) {
-            //itemView.ivHistoryComputerHand.setImageResource(gameHistoryStats.computerHand)
-            //itemView.ivHistoryPlayerHand.setImageResource(gameHistoryStats.playerHand)
-            itemView.tvHistoryWinLose.text = "Score: " + gameHistoryStats.computerHand.toString()
+            itemView.tvLevel.text = "Level " + gameHistoryStats.level.toString()
+            itemView.tvHistoryWinLose.text = "Score: " + gameHistoryStats.points.toString()
             itemView.tvHistoryDate.text = gameHistoryStats.date.toString()
+
+            //update the star high score
+            if(gameHistoryStats.stars > highestStarCountLevel1){
+                highestStarCountLevel1 = gameHistoryStats.stars
+            }
 
             when (gameHistoryStats.stars) {
                 1 -> itemView.ivStar1gold.setImageResource(R.drawable.star)
@@ -41,9 +47,6 @@ class GameHistoryAdapter(private val gameHistoryStatistics: List<GameHistoryStat
                     print("starCount is wrong")
                 }
             }
-
-           // itemView.tvProduct.text = gameHistoryStats.name
-           // itemView.tvQuantity.text = gameHistoryStats.quantity.toString()
         }
     }
 }

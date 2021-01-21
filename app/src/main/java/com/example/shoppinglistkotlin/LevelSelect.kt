@@ -6,8 +6,16 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_level_select.*
 import kotlinx.android.synthetic.main.content_level_select.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LevelSelect : AppCompatActivity() {
+
+    private lateinit var gameHistoryRepository: GameHistoryRepository
+    private val products = arrayListOf<GameHistoryStats>()
+    private val mainScope = CoroutineScope(Dispatchers.Main)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,15 +27,15 @@ class LevelSelect : AppCompatActivity() {
                 .setAction("Action", null).show()
         }*/
         initViews()
-
-        //println();
-
     }
 
     private fun initViews() {
         btnLevel1.setOnClickListener { onLevel1Click() }
         btnLevel2.setOnClickListener { onLevel2Click() }
         btnLevel3.setOnClickListener { onLevel3Click() }
+
+        val product = intent.getParcelableExtra<GameHistoryStats>(MainActivity.PRODUCT_EXTRA)
+        println("product: " + product)
     }
 
     private fun onLevel1Click(){
