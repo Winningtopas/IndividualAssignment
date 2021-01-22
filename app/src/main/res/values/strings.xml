@@ -10,6 +10,8 @@
     <string name="btnScissors">Scissors</string>
     <string name="scoreGame">Score</string>
     <string name="level">Level</string>
+    <string name="play">Play</string>
+    <string name="random_level">Random Level</string>
     <string name="title_activity_game_history">GameHistory</string>
     <string name="date">Date</string>
     <string name="title_activity_title_screen">title_screen</string>

@@ -33,8 +33,7 @@ class TitleScreen : AppCompatActivity() {
 
     private fun initViews() {
         btnPlay.setOnClickListener { onPlayClick() }
-        btnShop.setOnClickListener { onShopClick() }
-        btnHowToPlay.setOnClickListener { onHowToPlayClick() }
+        btnRandomLevel.setOnClickListener { onRandomLevelClick() }
     }
 
     override fun onBackPressed() {
@@ -42,17 +41,22 @@ class TitleScreen : AppCompatActivity() {
     }
 
     private fun onPlayClick(){
+        finish()
         mp.stop()
         startActivity(Intent(this, LevelSelect::class.java))
     }
 
-    private fun onShopClick(){
-
-    }
-
-    private fun onHowToPlayClick(){
+    private fun onRandomLevelClick(){
+        finish()
         mp.stop()
-        startActivity(Intent(this, MainActivity::class.java))
+
+        var randomLevel: Int = (0..2).random()
+        println("random level: " + randomLevel)
+
+        val result = Intent(this, MainActivity::class.java)
+        result.putExtra("level", randomLevel)
+        startActivity(result)
+        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
